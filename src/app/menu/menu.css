@@ -1,19 +1,20 @@
-.dashboard-container {
+.menu-container {
     font-family: 'Montserrat', sans-serif;
     padding-left: 5%;
+    padding-top: 2%;
 }
 
-.dashboard-container h1 {
+.menu-container h1 {
     font-size: 30px;
     color: #333;
 }
 
-.dashboard-container p {
+.menu-container p {
     color: #333;
     font-size: 20px;
 }
 
-.dashboard-container button {
+.menu-container button {
     background-color: #60D140;
     margin-top: 1%;
     color: white;
@@ -25,11 +26,11 @@
     transition: background-color 0.3s ease;
 }
 
-.dashboard-container button:not(:first-child) {
+.menu-container button:not(:first-child) {
     margin-left: 1%;
 }
 
-.dashboard-container button:hover {
+.menu-container button:hover {
     background-color: #4caf50;
 }
 
@@ -65,3 +66,20 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+.tag {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-top: 1%;
+    border-radius: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: #F5F5F5;
+    color: #010101;
+}
+
+.tag.active {
+    background-color: #60D140;
+    color: #ffffff;
+}
