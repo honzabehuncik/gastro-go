@@ -21,7 +21,6 @@ export default function RootLayout({
     <SessionWrapper>
       <html lang="en">
         <body className={inter.className}>
-          <NavLogin/>
           {children}
         </body>
       </html>
