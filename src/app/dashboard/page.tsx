@@ -2,12 +2,15 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
-import "./dashboard.css"; // Importujte soubor CSS pro styly
+import Nav from "@/components/nav/Nav";
+import "./dashboard.css";
 
 export default function DashboardPage() {
     const { data: session } = useSession();
     return (
-        <div className="dashboard">
+        <main>
+            <Nav></Nav>
+            <div className="dashboard">
             <div className="hero-section">
                 <div className="gradient-overlay"></div>
                 <div className="hero-content">
@@ -31,5 +34,7 @@ export default function DashboardPage() {
             )}
             </div>
         </div>
+        </main>
+        
     );
 }
