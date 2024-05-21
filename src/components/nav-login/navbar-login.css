@@ -57,10 +57,30 @@ nav a.logo {
     margin-left: 5%;
 }
 
-nav .user-button {
-    width: 55px;
-    height: 55px;
+nav .user-login-btn {
+    width: 85px;
+    height: 45px;
+    background-color: transparent;
+    color: black;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    margin-left: 70%;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav .user-login-btn:hover {
+    color: #60D140;
+}
+
+nav .user-register-btn {
+    width: 85px;
+    height: 45px;
     background-color: #EFEFEF;
+    color: black;
     border-radius: 12px;
     display: flex;
     justify-content: center;
@@ -71,18 +91,7 @@ nav .user-button {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-nav .user-button:hover {
+nav .user-register-btn:hover {
     background-color: #60D140;
-}
-
-
-
-nav .user-icon {
-    font-size: 18px;
-    color: #000000;
-}
-
-
-nav .user-button:hover .user-icon {
-    color: #FFFFFF; /* Změna barvy ikony na bílou při hoveru */
+    color: white;
 }
