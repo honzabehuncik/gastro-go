@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
         <NavLogin/>
-    <Hero/>
+        <Hero/>
     </main>
   );
 }
