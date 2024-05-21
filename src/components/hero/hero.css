@@ -6,13 +6,13 @@
 
 h1 {
     color: white;
-    font-size: 80px; /* Upraveno na responzivní velikost */
+    font-size: 80px;
     width: 450px;
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     position: absolute;
-    top: 15vh; /* Upraveno na procentuální hodnotu */
+    top: 15vh;
     left: 5%;
     letter-spacing: 0.2vw;
     z-index: 1;
@@ -32,13 +32,13 @@ h1 {
 }
 
 .ellipse {
-    width: 35vw; /* Upraveno na procentuální hodnotu */
-    height: 35vw; /* Upraveno na procentuální hodnotu */
+    width: 35vw;
+    height: 35vw;
 }
 
 .ellipse2 {
-    width: 30vw; /* Upraveno na procentuální hodnotu */
-    height: 30vw; /* Upraveno na procentuální hodnotu */
+    width: 30vw;
+    height: 30vw;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
@@ -53,21 +53,20 @@ h1 {
 }
 
 img {
-    width: 30vw; /* Upraveno na procentuální hodnotu */
+    width: 30vw;
     position: absolute;
-    top: 15vh; /* Upraveno na procentuální hodnotu */
+    top: 15vh;
     right: 15%;
     z-index: 1;
 }
 
 .location-box {
-    width: 60vw; /* Upraveno na procentuální hodnotu */
-    max-width: 550px;
+    width: 550px;
     height: 120px;
     background-color: white;
     border-radius: 25px;
     position: absolute;
-    top: 63vh; /* Upraveno na procentuální hodnotu */
+    top: 63vh;
     left: 5%;
     z-index: 1;
     display: flex;
@@ -76,7 +75,7 @@ img {
 }
 
 #adress-input {
-    width: 190%; /* Upraveno na procentuální hodnotu */
+    width: 190%;
     height: 50px;
     text-align: center;
     background-color: #EFEFEF;
@@ -87,7 +86,7 @@ img {
 }
 
 .find-button {
-    width: 45%; /* Upraveno na procentuální hodnotu */
+    width: 45%;
     max-width: 150px;
     height: 50px;
     background-color: #60D140;
@@ -110,7 +109,6 @@ img {
     padding-right: 5%;
 }
 
-/* Media Queries */
 @media (max-width: 1024px) {
     h1 {
         font-size: 40px;
@@ -118,8 +116,7 @@ img {
     }
 
     img {
-        width: 50%;
-        right: 10%;
+       display: none;
     }
 
     .ellipse, .ellipse2 {
@@ -133,6 +130,37 @@ img {
         right: -15%;
         left: -15%;
     }
+
+    .location-box {
+        width: 450px;
+    }
+
+    #adress-input {
+        width: 160%;
+        height: 50px;
+        text-align: center;
+        background-color: #EFEFEF;
+        border-radius: 15px;
+        color: #787878;
+        border: none;
+        margin-left: 30%;
+    }
+
+    .find-button {
+        width: 40%;
+        max-width: 150px;
+        height: 50px;
+        background-color: #60D140;
+        color: white;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        margin-right: 10%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -141,8 +169,7 @@ img {
     }
 
     img {
-        width: 70%;
-        right: 5%;
+        display: none;
     }
 
     .ellipse, .ellipse2 {
@@ -156,6 +183,37 @@ img {
         right: -20%;
         left: -20%;
     }
+
+    .location-box {
+        width: 550px;
+    }
+
+    #adress-input {
+        width: 140%;
+        height: 50px;
+        text-align: center;
+        background-color: #EFEFEF;
+        border-radius: 15px;
+        color: #787878;
+        border: none;
+        margin-left: 30%;
+    }
+
+    .find-button {
+        width: 35%;
+        max-width: 450px;
+        height: 50px;
+        background-color: #60D140;
+        color: white;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        margin-right: 10%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -164,8 +222,7 @@ img {
     }
 
     img {
-        width: 80%;
-        right: 5%;
+        display: none;
     }
 
     .ellipse, .ellipse2 {
@@ -178,5 +235,36 @@ img {
         bottom: -25%;
         right: -25%;
         left: -25%;
+    }
+
+    .location-box {
+        width: 350px;
+    }
+
+    #adress-input {
+        width: 120%;
+        height: 50px;
+        text-align: center;
+        background-color: #EFEFEF;
+        border-radius: 15px;
+        color: #787878;
+        border: none;
+        margin-left: 30%;
+    }
+
+    .find-button {
+        width: 30%;
+        max-width: 150px;
+        height: 50px;
+        background-color: #60D140;
+        color: white;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        margin-right: 10%;
     }
 }
