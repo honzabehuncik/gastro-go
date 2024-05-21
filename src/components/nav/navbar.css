@@ -1,0 +1,55 @@
+header {
+    width: 100%;
+    height: 80px;
+    background-color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+}
+
+nav {
+    width: 100%;
+    max-width: 1920px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+nav a.logo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 30px;
+    color: #60D140;
+    text-decoration: none;
+    margin-left: 5%;
+}
+
+nav .user-button {
+    width: 55px;
+    height: 55px;
+    background-color: #EFEFEF;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    margin-right: 5%;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav .user-button:hover {
+    background-color: #60D140;
+}
+
+
+
+nav .user-icon {
+    font-size: 18px;
+    color: #000000;
+}
+
+
+nav .user-button:hover .user-icon {
+    color: #FFFFFF; /* Změna barvy ikony na bílou při hoveru */
+}
