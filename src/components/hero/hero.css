@@ -6,15 +6,15 @@
 
 h1 {
     color: white;
-    font-size: 80px;
-    width: 380px;
+    font-size: 80px; /* Upraveno na responzivní velikost */
+    width: 450px;
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     position: absolute;
-    top: 15%;
+    top: 15vh; /* Upraveno na procentuální hodnotu */
     left: 5%;
-    letter-spacing: 3px;
+    letter-spacing: 0.2vw;
     z-index: 1;
 }
 
@@ -24,67 +24,71 @@ h1 {
     overflow: hidden;
 }
 
-.ellipse {
+.ellipse, .ellipse2 {
     position: absolute;
-    width: 650px;
-    height: 650px;
     background-color: #7CDB61;
     border-radius: 50%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+.ellipse {
+    width: 35vw; /* Upraveno na procentuální hodnotu */
+    height: 35vw; /* Upraveno na procentuální hodnotu */
+}
+
 .ellipse2 {
-    position: absolute;
-    width: 550px;
-    height: 550px;
-    background-color: #7CDB61;
-    border-radius: 50%;
+    width: 30vw; /* Upraveno na procentuální hodnotu */
+    height: 30vw; /* Upraveno na procentuální hodnotu */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .ellipse2.left-bottom {
-    bottom: -100px;
-    left: -100px;
+    bottom: -10%;
+    left: -10%;
 }
 
 .ellipse.right-top {
-    top: -100px;
-    right: -100px;
+    top: -10%;
+    right: -10%;
 }
 
 img {
-    width: 650px;
+    width: 30vw; /* Upraveno na procentuální hodnotu */
     position: absolute;
-    top: 15%;
+    top: 15vh; /* Upraveno na procentuální hodnotu */
     right: 15%;
     z-index: 1;
 }
 
 .location-box {
-    width: 550px;
-    height:120px;
+    width: 60vw; /* Upraveno na procentuální hodnotu */
+    max-width: 550px;
+    height: 120px;
     background-color: white;
     border-radius: 25px;
     position: absolute;
-    top: 63%;
+    top: 63vh; /* Upraveno na procentuální hodnotu */
     left: 5%;
     z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 #adress-input {
-    width: 300px;
+    width: 190%; /* Upraveno na procentuální hodnotu */
     height: 50px;
-    margin-top: 6.5%;
-    margin-bottom: 5%;
-    margin-left: 5%;
     text-align: center;
     background-color: #EFEFEF;
     border-radius: 15px;
     color: #787878;
     border: none;
+    margin-left: 30%;
 }
 
 .find-button {
-    width: 150px;
+    width: 45%; /* Upraveno na procentuální hodnotu */
+    max-width: 150px;
     height: 50px;
     background-color: #60D140;
     color: white;
@@ -95,16 +99,84 @@ img {
     cursor: pointer;
     border: none;
     transition: background-color 0.3s ease, color 0.3s ease;
-    position: absolute;
-    left: 67%;
-    top: 30%;
+    margin-right: 10%;
 }
 
-.find-button :hover {
+.find-button:hover {
     color: #787878;
 }
 
 .search-icon {
     padding-right: 5%;
-    margin-top: 1%;
+}
+
+/* Media Queries */
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 40px;
+        letter-spacing: 2px;
+    }
+
+    img {
+        width: 50%;
+        right: 10%;
+    }
+
+    .ellipse, .ellipse2 {
+        width: 50%;
+        height: 50%;
+    }
+
+    .ellipse2.left-bottom, .ellipse.right-top {
+        top: -15%;
+        bottom: -15%;
+        right: -15%;
+        left: -15%;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 30px;
+    }
+
+    img {
+        width: 70%;
+        right: 5%;
+    }
+
+    .ellipse, .ellipse2 {
+        width: 70%;
+        height: 70%;
+    }
+
+    .ellipse2.left-bottom, .ellipse.right-top {
+        top: -20%;
+        bottom: -20%;
+        right: -20%;
+        left: -20%;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    img {
+        width: 80%;
+        right: 5%;
+    }
+
+    .ellipse, .ellipse2 {
+        width: 80%;
+        height: 80%;
+    }
+
+    .ellipse2.left-bottom, .ellipse.right-top {
+        top: -25%;
+        bottom: -25%;
+        right: -25%;
+        left: -25%;
+    }
 }
