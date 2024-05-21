@@ -57,7 +57,7 @@
       <workItem from="1716209029716" duration="637000" />
       <workItem from="1716270645061" duration="9568000" />
       <workItem from="1716280851996" duration="118000" />
-      <workItem from="1716282399256" duration="594000" />
+      <workItem from="1716282399256" duration="1503000" />
     </task>
     <task id="LOCAL-00001" summary="creating and editing login navbar">
       <created>1716275074393</created>
@@ -101,7 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1716282425530</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="responsibility fix">
+      <created>1716282999272</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1716282999272</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

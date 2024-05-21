@@ -61,8 +61,7 @@ img {
 }
 
 .location-box {
-    width: 60vw;
-    max-width: 550px;
+    width: 550px;
     height: 120px;
     background-color: white;
     border-radius: 25px;
@@ -117,8 +116,7 @@ img {
     }
 
     img {
-        width: 50%;
-        right: 10%;
+       display: none;
     }
 
     .ellipse, .ellipse2 {
@@ -132,6 +130,37 @@ img {
         right: -15%;
         left: -15%;
     }
+
+    .location-box {
+        width: 450px;
+    }
+
+    #adress-input {
+        width: 160%;
+        height: 50px;
+        text-align: center;
+        background-color: #EFEFEF;
+        border-radius: 15px;
+        color: #787878;
+        border: none;
+        margin-left: 30%;
+    }
+
+    .find-button {
+        width: 40%;
+        max-width: 150px;
+        height: 50px;
+        background-color: #60D140;
+        color: white;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        margin-right: 10%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -140,8 +169,7 @@ img {
     }
 
     img {
-        width: 70%;
-        right: 5%;
+        display: none;
     }
 
     .ellipse, .ellipse2 {
@@ -155,6 +183,37 @@ img {
         right: -20%;
         left: -20%;
     }
+
+    .location-box {
+        width: 550px;
+    }
+
+    #adress-input {
+        width: 140%;
+        height: 50px;
+        text-align: center;
+        background-color: #EFEFEF;
+        border-radius: 15px;
+        color: #787878;
+        border: none;
+        margin-left: 30%;
+    }
+
+    .find-button {
+        width: 35%;
+        max-width: 450px;
+        height: 50px;
+        background-color: #60D140;
+        color: white;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        margin-right: 10%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -163,8 +222,7 @@ img {
     }
 
     img {
-        width: 80%;
-        right: 5%;
+        display: none;
     }
 
     .ellipse, .ellipse2 {
@@ -177,5 +235,36 @@ img {
         bottom: -25%;
         right: -25%;
         left: -25%;
+    }
+
+    .location-box {
+        width: 350px;
+    }
+
+    #adress-input {
+        width: 120%;
+        height: 50px;
+        text-align: center;
+        background-color: #EFEFEF;
+        border-radius: 15px;
+        color: #787878;
+        border: none;
+        margin-left: 30%;
+    }
+
+    .find-button {
+        width: 30%;
+        max-width: 150px;
+        height: 50px;
+        background-color: #60D140;
+        color: white;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        margin-right: 10%;
     }
 }
