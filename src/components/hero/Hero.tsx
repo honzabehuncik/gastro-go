@@ -11,7 +11,7 @@ export default function Hero() {
                     <img className="aboutus-img" src="/landing-img.png"/>
                     <div className="location-box">
                         <div className="location-input">
-                            <input type="text" id="adress-input" name="myInput" placeholder="Zadejte adresu pro doručení"></input>
+                            <input type="text" id="adress-input" name="myInput" placeholder="Zadejte adresu pro doručení..."></input>
                         </div>
                         <button className="find-button">
                             <div className="search-icon">
