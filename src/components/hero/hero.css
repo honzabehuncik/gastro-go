@@ -15,6 +15,7 @@ h1 {
     top: 15%;
     left: 5%;
     letter-spacing: 3px;
+    z-index: 1;
 }
 
 .container {
