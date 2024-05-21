@@ -2,34 +2,33 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
-import Link from "next/link";
 import Nav from "@/components/nav/Nav";
-import "./dashboard.css";
+import "./driver.css";
+import { string } from "zod";
 
-export default function DashboardPage() {
+export default function DriverPage() {
     const { data: session } = useSession();
+    const heading = !session ? "Neoprávněný přístup!" : "Administrace - rozvoz";
     return (
         <main>
             <Nav></Nav>
-            <div className="dashboard">
+            <div className="driver">
             <div className="hero-section">
                 <div className="gradient-overlay"></div>
                 <div className="hero-content">
-                    <h1>Dashboard</h1>
+                    <h1>{heading}</h1>
                 </div>
             </div>
-            <div className="dashboard-container">
+            <div className="driver-container">
             {session ? (
                 <>
-                    <h1>Vítejte {session.user?.name}</h1>
-                    <p>Vaše role:</p>
-                    <Link href="/driver"><button>Přihlásit se jako kurýr</button></Link>
-                    <button>Zažádat o přidání restaurace</button>
+                    <h1>Pustíme se do práce, {session.user?.name}!</h1>
+                    <p>Aktivní objednávky:</p>
                     <button onClick={() => signOut()}>Odhlásit se</button>
                 </>
             ) : (
                 <>
-                    <h1>Nepřihlášen</h1>
+                    <h1>Pro přístup na tuhle stránku se musíte přihlásit!</h1>
                     <button onClick={() => signIn("google")}>Přihlašte se přes Google</button>
                 </>
             )}
