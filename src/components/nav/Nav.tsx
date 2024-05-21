@@ -1,34 +1,22 @@
+"use client"
+
 import React, { useState } from "react";
-import Link from "next/link";
-import { FaUser } from "react-icons/fa";
 import "./navbar.css";
+import { usePathname } from "next/navigation";
+import NavLogin from "./login-nav";
+import DashboardNav from "./dashboard-nav";
+import MenuNav from "./menu-nav";
 
-const Nav: React.FC = () => {
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-
-    const toggleDropdown = () => {
-        setDropdownOpen(!dropdownOpen);
-    };
+export default function Nav(){
+    const path = usePathname()
 
     return (
-        <header>
-            <nav>
-                <Link href="/" className="logo">GastroGO</Link>
-                <div className="user-menu">
-                    <button className="user-button" onClick={toggleDropdown}>
-                        <FaUser className="user-icon" />
-                    </button>
-                    {dropdownOpen && (
-                        <div className="dropdown-menu">
-                            <Link href="#">👤 účet</Link>
-                            <Link href="#">📝 kariéra</Link>
-                            <Link href="#">👋🏼 odhlásit se</Link>
-                        </div>
-                    )}
-                </div>
-            </nav>
-        </header>
+        <>
+            {path == "/" && <NavLogin />}
+            {path == "/dashboard" && <DashboardNav />}
+            {path == "/menu" && <MenuNav />}
+            {!(path == "/" || path == "/dashboard" || path == "/menu") && <NavLogin />}
+        </>
     );
 };
 
-export default Nav;

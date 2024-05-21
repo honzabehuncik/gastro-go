@@ -2,7 +2,7 @@ import Link from "next/link";
 import "./menu-navbar.css";
 import { FaUser, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 
-export default function Nav() {
+export default function MenuNav() {
     return (
         <header>
             <nav>

@@ -2,7 +2,6 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import React, { useState } from "react";
-import Nav from "@/components/menu_nav/MenuNav";
 import "./menu.css";
 
 export default function MenuPage() {
@@ -28,7 +27,6 @@ export default function MenuPage() {
 
     return (
         <main>
-            <Nav />
             <div className="menu">
                 <div className="menu-container">
                     {session ? (
