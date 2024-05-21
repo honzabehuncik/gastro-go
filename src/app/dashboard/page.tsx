@@ -22,7 +22,7 @@ export default function DashboardPage() {
             {session ? (
                 <>
                     <h1>Vítejte {session.user?.name}</h1>
-                    <p>Vaše role:</p>
+                    <p>Vaše role: {session.user?.role}</p>
                     <Link href="/driver"><button>Přihlásit se jako kurýr</button></Link>
                     <button>Zažádat o přidání restaurace</button>
                     <button onClick={() => signOut()}>Odhlásit se</button>
