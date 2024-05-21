@@ -1,15 +1,84 @@
-datasource db {
-  url      = env("DATABASE_URL")
-  provider = "postgresql"
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
-  password  String?
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
+  password      String
+  address       String?
+  fullName      String?
+  phoneNumber   String?
+  role          String
+  username      String          @unique
+  CustomerOrder CustomerOrder[]
+  Driver        Driver?
+}
+
+model CustomerOrder {
+  id                  Int         @id @default(autoincrement())
+  userId              Int
+  restaurantId        Int
+  driverId            Int?
+  orderDate           DateTime    @default(now())
+  deliveryAddress     String
+  totalPrice          Float
+  statusId            Int
+  specialInstructions String?
+  Driver              Driver?     @relation(fields: [driverId], references: [id])
+  Restaurant          Restaurant  @relation(fields: [restaurantId], references: [id])
+  OrderStatus         OrderStatus @relation(fields: [statusId], references: [id])
+  User                User        @relation(fields: [userId], references: [id])
+  OrderItem           OrderItem[]
+}
+
+model Driver {
+  id            Int             @id @default(autoincrement())
+  userId        Int             @unique
+  vehicleInfo   String?
+  availability  Boolean         @default(true)
+  CustomerOrder CustomerOrder[]
+  User          User            @relation(fields: [userId], references: [id])
+}
+
+model Menu {
+  id           Int         @id @default(autoincrement())
+  restaurantId Int
+  name         String
+  description  String?
+  price        Float
+  Restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
+  OrderItem    OrderItem[]
+}
+
+model OrderItem {
+  id            Int           @id @default(autoincrement())
+  orderId       Int
+  menuId        Int
+  quantity      Int
+  itemPrice     Float
+  Menu          Menu          @relation(fields: [menuId], references: [id])
+  CustomerOrder CustomerOrder @relation(fields: [orderId], references: [id])
+}
+
+model OrderStatus {
+  id            Int             @id @default(autoincrement())
+  statusName    String
+  CustomerOrder CustomerOrder[]
+}
+
+model Restaurant {
+  id            Int             @id @default(autoincrement())
+  name          String
+  address       String
+  phoneNumber   String?
+  email         String?
+  openingHours  String?
+  CustomerOrder CustomerOrder[]
+  Menu          Menu[]
 }
