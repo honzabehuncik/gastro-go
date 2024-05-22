@@ -1,19 +1,22 @@
-import Link from "next/link";
-import "./navbar.css";
-import { FaUser } from "react-icons/fa";
+"use client"
 
-export default function Nav() {
+import React, { useState } from "react";
+import "./navbar.css";
+import { usePathname } from "next/navigation";
+import NavLogin from "./login-nav";
+import DashboardNav from "./dashboard-nav";
+import MenuNav from "./menu-nav";
+
+export default function Nav(){
+    const path = usePathname()
+
     return (
-        <header>
-            <nav>
-                <Link href="/" className="logo">GastroGO</Link>
-                <Link href="/dashboard">
-                <button className="user-button">
-                    <FaUser className="user-icon" />
-                </button>
-                </Link>
-                
-            </nav>
-        </header>
+        <>
+            {path == "/" && <NavLogin />}
+            {path == "/dashboard" && <DashboardNav />}
+            {path == "/menu" && <MenuNav />}
+            {!(path == "/" || path == "/dashboard" || path == "/menu") && <NavLogin />}
+        </>
     );
-}
+};
+
