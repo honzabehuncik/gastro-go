@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { FaUser } from "react-icons/fa";
 import "./navbar.css";
+import { signOut } from "next-auth/react";
 
 const DashboardNav: React.FC = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -20,9 +21,10 @@ const DashboardNav: React.FC = () => {
                     </button>
                     {dropdownOpen && (
                         <div className="dropdown-menu">
-                            <Link href="#">👤 účet</Link>
-                            <Link href="#">📝 kariéra</Link>
-                            <Link href="#">👋🏼 odhlásit se</Link>
+                            <Link href="/dashboard">👤 Účet</Link>
+                            <Link href="/driver">📝 Kariéra</Link>
+                            <Link href="/driver">🍕 Přidat restauraci</Link>
+                            <Link href="" onClick={() => signOut()}>👋🏼 Odhlásit se</Link>
                         </div>
                     )}
                 </div>
