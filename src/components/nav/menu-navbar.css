@@ -14,6 +14,7 @@ nav {
     align-items: center;
     padding: 0 20px;
     border-bottom: 2px solid #EFEFEF;
+    gap: 25px;
 }
 
 nav .logo-container {
@@ -31,14 +32,7 @@ nav a.logo {
 }
 
 nav .location {
-    display: flex;
-    align-items: center;
-    color: rgba(0, 0, 0, 0.5);
-    font-family: 'Montserrat', sans-serif;
-    font-weight: normal;
-    font-size: 18px;
-    margin-left: 10%;
-    width: 700px;
+    margin-left: 25px;
 }
 
 nav .location-icon {
