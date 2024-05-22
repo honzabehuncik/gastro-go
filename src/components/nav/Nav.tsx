@@ -16,7 +16,8 @@ export default function Nav(){
             {path == "/dashboard" && <DashboardNav />}
             {path == "/menu" && <MenuNav />}
             {path == "/driver" && <DashboardNav />}
-            {!(path == "/" || path == "/dashboard" || path == "/menu" || path == "/driver") && <NavLogin />}
+            {path == "/restaurants" && <DashboardNav />}
+            {!(path == "/" || path == "/dashboard" || path == "/menu" || path == "/driver" || path == "/restaurants") && <NavLogin />}
         </>
     );
 };

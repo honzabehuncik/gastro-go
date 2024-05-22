@@ -2,46 +2,46 @@
 
 import { signIn, useSession } from "next-auth/react";
 import React from "react";
-import "./driver.css";
+import "./restaurants.css";
 
 const orders = [
     {
         id: "001",
         name: "Objednávka 1",
-        address: "Ulice 123, Město",
-        deliveryTime: "19:35",
+        driver: "Marek",
+        driverArrive: "19:35",
         status: "⌛ Připravuje se",
         statusClass: "preparing",
     },
     {
         id: "002",
         name: "Objednávka 2",
-        address: "Ulice 456, Město",
-        deliveryTime: "20:00",
-        status: "🚴 Doručování",
-        statusClass: "delivering",
+        driver: "Marek",
+        driverArrive: "20:00",
+        status: "⌛ Připravuje se",
+        statusClass: "preparing",
     },
     {
         id: "003",
         name: "Objednávka 3",
-        address: "Ulice 789, Město",
-        deliveryTime: "20:30",
-        status: "✅ Doručeno",
-        statusClass: "delivered",
+        driver: "Marek",
+        driverArrive: "20:30",
+        status: "⌛ Připravuje se",
+        statusClass: "preparing",
     },
     {
         id: "004",
         name: "Objednávka 4",
-        address: "Ulice 101, Město",
-        deliveryTime: "21:00",
-        status: "👍 Zaznamenáno",
-        statusClass: "recorded",
+        driver: "Marek",
+        driverArrive: "21:00",
+        status: "⌛ Připravuje se",
+        statusClass: "preparing",
     },
 ];
 
 export default function DriverPage() {
     const { data: session } = useSession();
-    const heading = !session ? "Neoprávněný přístup!" : "Rozvoz panel";
+    const heading = !session ? "Neoprávněný přístup!" : "Restaurace panel";
     return (
         <main>
             <div className="driver">
@@ -54,10 +54,10 @@ export default function DriverPage() {
                 <div className="driver-container">
                     {session ? (
                         <>
-                            <h1>Aktivní objednávky</h1>
+                            <h1>Nové objednávky</h1>
                             <p>
-                                Níže nalezne aktivní objednávky, které nemají přiřazeného kurýra pro rozvoz.
-                                <br></br>Vybranou objednávku nejprve přiřaďte a poté se můžete pustit do práce!
+                                Níže nalezne nové objednávky, které je potřeba připravit.
+                                <br></br>Každá objednávka má přiřazeného kurýra, který ji vyzvedne v očekávaný čas.
                                 </p>
                             <div className="order-table">
                                 {orders.map((order) => (
@@ -68,12 +68,10 @@ export default function DriverPage() {
                                         <div className="order-id">ID: #{order.id}</div>
                                         <div className="order-details">
                                             <strong>Název: </strong>{order.name}<br/>
-                                            <strong>Adresa: </strong>{order.address}<br/>
-                                            <strong>Čas doručení: </strong>{order.deliveryTime}
+                                            <strong>Přiřazený kurýr: </strong>{order.driver}<br/>
+                                            <strong>Očekávaný čas příjezdu: </strong>{order.driverArrive}
                                         </div>
-                                        <button className="assign-button">Přiřadit objednávku</button>
-                                        <button className="edit-button">Spravovat</button>
-                                        <button className="remove-button">Odstranit</button>
+                                        <button className="assign-button">Dokončit objednávku</button>
                                     </div>
                                 ))}
                             </div>
