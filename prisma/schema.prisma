@@ -1,28 +1,13 @@
-<<<<<<< HEAD
-=======
 datasource db {
   provider = "postgresql"
   url = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING") 
 }
->>>>>>> master
 generator client {
   provider = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
 }
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-model Restaurant {
-  id           Int       @id @default(autoincrement())
-  name         String
-  address      String
-  phoneNumber  String?
-  email        String?
-  openingHours String?
-  menus        Menu[]
-  orders       CustomerOrder[]
-=======
 model Account {
   id                 String  @id @default(cuid())
   userId             String  @map("user_id")
@@ -41,7 +26,6 @@ model Account {
  
   @@unique([provider, providerAccountId])
   @@map("accounts")
->>>>>>> master
 }
  
 model Session {
@@ -66,121 +50,12 @@ model User {
  
   @@map("users")
 }
-<<<<<<< HEAD
-
-model Driver {
-  id          Int       @id @default(autoincrement())
-  userId      Int       @unique
-  vehicleInfo String?
-  availability Boolean   @default(true)
-  user        User      @relation(fields: [userId], references: [id])
-  orders      CustomerOrder[]
-}
-
-model Menu {
-  id          Int        @id @default(autoincrement())
-  restaurantId Int
-  name        String
-  description String?
-  price       Float
-  restaurant  Restaurant @relation(fields: [restaurantId], references: [id])
-  orderItems  OrderItem[]
-}
-
-model OrderStatus {
-  id          Int        @id @default(autoincrement())
-  statusName  String // pending, confirmed, preparing, delivered, delayed, cancelled, waiting for delivery
-  orders      CustomerOrder[]
-}
-
-model CustomerOrder {
-  id               Int          @id @default(autoincrement())
-  userId           Int
-  restaurantId     Int
-  driverId         Int?
-  orderDate        DateTime     @default(now())
-  deliveryAddress  String
-  totalPrice       Float
-  statusId         Int
-  specialInstructions String?
-  user             User         @relation(fields: [userId], references: [id])
-  restaurant       Restaurant   @relation(fields: [restaurantId], references: [id])
-  driver           Driver?      @relation(fields: [driverId], references: [id])
-  status           OrderStatus  @relation(fields: [statusId], references: [id])
-  orderItems       OrderItem[]
-}
-
-model OrderItem {
-  id          Int        @id @default(autoincrement())
-  orderId     Int
-  menuId      Int
-  quantity    Int
-  itemPrice   Float
-  order       CustomerOrder @relation(fields: [orderId], references: [id])
-  menu        Menu          @relation(fields: [menuId], references: [id])
-=======
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-model Account {
-  id                String  @id @default(cuid())
-  userId            String  @map("user_id")
-  type              String
-  provider          String
-  providerAccountId String  @map("provider_account_id")
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-  @@map("accounts")
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique @map("session_token")
-  userId       String   @map("user_id")
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("sessions")
-}
-
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  role          String?
-  accounts      Account[]
-  sessions      Session[]
-
-  @@map("users")
-}
-
-=======
  
->>>>>>> master
 model VerificationToken {
   identifier String
   token      String
   expires    DateTime
-<<<<<<< HEAD
-
-  @@unique([identifier, token])
-  @@map("verificationtokens")
->>>>>>> Stashed changes
-=======
  
   @@unique([identifier, token])
   @@map("verificationtokens")
->>>>>>> master
 }
