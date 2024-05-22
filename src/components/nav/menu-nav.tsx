@@ -1,8 +1,15 @@
+import React, { useState } from "react";
 import Link from "next/link";
 import "./menu-navbar.css";
 import { FaUser, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
+import { signOut } from "next-auth/react";
 
 export default function MenuNav() {
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
     return (
         <header>
             <nav>
@@ -21,9 +28,19 @@ export default function MenuNav() {
                         placeholder="Vyhledat na GastroGo..."
                     />
                 </div>
-                <button className="user-button">
-                    <FaUser className="user-icon" />
-                </button>
+                <div className="user-menu">
+                    <button className="user-button" onClick={toggleDropdown}>
+                        <FaUser className="user-icon" />
+                    </button>
+                    {dropdownOpen && (
+                        <div className="dropdown-menu">
+                        <Link href="/dashboard">👤 Účet</Link>
+                        <Link href="/driver">📝 Kariéra</Link>
+                        <Link href="/driver">🍕 Přidat restauraci</Link>
+                        <Link href="" onClick={() => signOut()}>👋🏼 Odhlásit se</Link>
+                    </div>
+                    )}
+                </div>
             </nav>
         </header>
     );
