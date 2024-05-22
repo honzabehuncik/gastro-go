@@ -1,0 +1,182 @@
+.dashboard-container {
+    font-family: 'Montserrat', sans-serif;
+    padding-left: 5%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.dashboard-container h1 {
+    font-size: 30px;
+    color: #333;
+}
+
+.dashboard-container p {
+    color: #333;
+    font-size: 20px;
+}
+
+.dashboard-container button {
+    background-color: #60D140;
+    margin-top: 1%;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.dashboard-container button:not(:first-of-type) {
+    margin-left: 1%;
+}
+
+.dashboard-container button:hover {
+    background-color: #4caf50;
+}
+
+.hero-section {
+    background-image: url('https://images.ctfassets.net/sv4wepqk8nm7/2X0RjFyOJ0Eu8QGLTPKd2m/eddcbe7f3fde747c7de1bda51b19819e/7-Keys-to-Customer-Satisfaction-in-Food-Delivery-Deliverect-speed.jpg?w=3296&h=1440');
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 3%;
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(96, 209, 64, 0.6), rgba(255, 255, 255, 1));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    padding-left: 5%;
+}
+
+.hero-content h1 {
+    color: white;
+    font-size: 45px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.order-details {
+    width: 45%;
+}
+
+.order-step {
+    border: 2px solid #60D140;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.order-step.active {
+    border-color: #60D140;
+}
+
+.order-step.secondary {
+    border-color: #ccc;
+}
+
+.order-step.info {
+    margin-top: 4%;
+    border-color: #5bb0ff;
+    background-color: rgba(91, 176, 255, 0.100);
+}
+
+.order-content, .info-content {
+    display: flex;
+    align-items: center;
+}
+
+.order-step .icon {
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+.order-step.active .icon {
+    color: #60D140;
+    font-size: 40px;
+}
+
+.order-step.secondary .icon {
+    color: #ccc;
+}
+
+.order-step.info .icon {
+    color: #5bb0ff;
+    font-size: 25px;
+}
+
+.order-step h2 {
+    color: #60D140;
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+.order-step h3 {
+    color: #333;
+    font-weight: 450;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.order-step p {
+    color: #333;
+    font-size: 16px;
+}
+
+.order-step.secondary h2 {
+    color: #999;
+}
+
+.order-step.info h3 {
+    font-size: 17px;
+}
+
+.order-step.info p {
+    font-size: 15px;
+}
+
+.order-step.info a {
+    color: #5bb0ff;
+}
+
+.order-step.info a:hover {
+    color: #2774bd;
+    text-decoration: underline;
+}
+
+.timer-wrapper {
+    margin-right: 8%;
+}
+
+.time {
+    font-size: 75px;
+    font-weight: 650;
+    color: #333;
+    line-height: 1;
+    text-align: center;
+}
+
+.time-dimension {
+    color: #333;
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.time-description {
+    color: #333;
+    text-align: center;
+}
