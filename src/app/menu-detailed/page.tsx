@@ -59,11 +59,12 @@ export default function MenuDetailedPage() {
                                 type="text"
                                 className="searchbar-input"
                                 placeholder="Na co máte chuť?"/>
-                            </div>
-
-                            <button className="find-button">
+                                <button className="find-button">
                             <a href="#">Hledat</a>
                         </button>
+                            </div>
+
+                        
 
 
                         <h1>Sushi</h1>
