@@ -1,8 +1,8 @@
-import { signup } from '@/app/actions/auth'
+
  
 export function SignupForm() {
   return (
-    <form action={signup}>
+    <form>
       <div>
         <label htmlFor="email">Email</label>
         <input id="email" name="email" type="email" placeholder="Email" />
