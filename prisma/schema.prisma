@@ -88,12 +88,13 @@ model Badge {
 }
 
 model Driver {
-  id           String          @id @default(cuid())
-  userId       String          @unique
-  vehicleInfo  String?
-  availability Boolean         @default(true)
-  orders       CustomerOrder[]
-  user         User            @relation(fields: [userId], references: [id])
+  id            String          @id @default(cuid())
+  userId        String          @unique
+  vehicleInfo   String?
+  availability  Boolean         @default(true)
+  authenticated Boolean         @default(false)
+  orders        CustomerOrder[]
+  user          User            @relation(fields: [userId], references: [id])
 }
 
 model Menu {
