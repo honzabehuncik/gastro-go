@@ -103,9 +103,13 @@ const Content = styled(Dialog.Content, {
     borderRadius: 12,
     padding: '24px 24px 32px',
     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-    width: '90%', // Adjusted width
+    width: '100%', // Adjusted width
     maxWidth: '500px',
     zIndex: "1",
+    '@media (max-width: 768px)': {
+        width: 'calc(100% - 32px)', // Adjusted width for smaller screens
+        maxWidth: 'unset',
+    },
 });
 
 const DialogContainer = styled(animated.div, {
@@ -151,10 +155,14 @@ const Input = styled('input', {
     fontFamily: 'Montserrat, sans-serif',
     borderRadius: '12px',
     border: '1px solid #ddd',
-    width: '100%',
+    width: '95%',
     backgroundColor: 'White',
-    color: 'black'
+    color: 'black',
+    '@media (max-width: 768px)': {
+        width: 'calc(100% - 16px)', // Adjusted width for smaller screens
+    },
 });
+
 
 const SubmitButton = styled('button', {
     padding: '0.75rem',
