@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import { signIn, signOut, useSession } from "next-auth/react";
 import React, { useState } from "react";
 import Link from "next/link";
@@ -12,7 +11,7 @@ export default function DashboardPage() {
     const { data: session } = useSession();
     const [isOpen, setIsOpen] = useState(false);
 
-    const handleDialogChange = (isOpen) => setIsOpen(isOpen);
+    const handleDialogChange = (isOpen: boolean | ((prevState: boolean) => boolean)) => setIsOpen(isOpen);
 
     const transition = useTransition(isOpen, {
         from: { scale: 0.9, opacity: 0 },
@@ -49,13 +48,13 @@ export default function DashboardPage() {
                 </div>
             </div>
 
-            <Dialog.Root open={isOpen} onOpenChange={handleDialogChange}>
+            <Dialog.Root open={isOpen} onOpenChange={handleDialogChange} modal={true}>
                 <Dialog.Portal>
-                    {transition((style, item) => 
+                    {transition((style, item) =>
                         item && (
-                            <>
-                                <OverlayBackground style={{ opacity: style.opacity }} />
-                                <Content style={style}>
+                            <DialogContainer style={style}>
+                                <OverlayBackground />
+                                <Content>
                                     <DialogHeader>
                                         <CloseButton onClick={() => setIsOpen(false)}>
                                             <svg
@@ -77,10 +76,14 @@ export default function DashboardPage() {
                                         <Input type="text" placeholder="adresa" />
                                         <Input type="email" placeholder="email" />
                                         <Input type="tel" placeholder="telefon" />
+                                        <h2>Otevírací doba od:</h2>
+                                        <Input type="time" placeholder="Otevřeno od" />
+                                        <h2>Otevírací doba do:</h2>
+                                        <Input type="time" placeholder="Otevřeno do" />
                                         <SubmitButton>Submit</SubmitButton>
                                     </Form>
                                 </Content>
-                            </>
+                            </DialogContainer>
                         )
                     )}
                 </Dialog.Portal>
@@ -89,32 +92,36 @@ export default function DashboardPage() {
     );
 }
 
-// Popup components
-const OverlayBackground = styled(animated(Dialog.Overlay), {
-    width: '100vw',
-    height: '100vh',
+const OverlayBackground = styled(Dialog.Overlay, {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     position: 'fixed',
     inset: 0,
 });
 
-const Content = styled(animated(Dialog.Content), {
-    position: 'relative',
-    top: '10%',
-    left: '35%',
-    transform: 'translate(-50%, -50%)',
-    width: '50vw',
-    maxWidth: '500px',
+const Content = styled(Dialog.Content, {
     backgroundColor: 'white',
     borderRadius: 12,
     padding: '24px 24px 32px',
     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+    width: '90%', // Adjusted width
+    maxWidth: '500px',
+    zIndex: "1",
+});
+
+const DialogContainer = styled(animated.div, {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
 });
 
 const DialogHeader = styled('header', {
     display: 'flex',
     justifyContent: 'flex-end',
-    marginBottom: 16,
 });
 
 const CloseButton = styled('button', {
@@ -125,7 +132,7 @@ const CloseButton = styled('button', {
 });
 
 const Title = styled(Dialog.Title, {
-    fontSize: 25,
+    fontSize: 30,
     fontFamily: 'Montserrat, sans-serif',
     textAlign: 'center',
     marginBottom: '1rem',
