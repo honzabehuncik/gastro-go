@@ -70,9 +70,8 @@
 }
 
 h2 {
-    fontSize: 5px;
+    fontSize: 1px;
     fontFamily: 'Montserrat', sans-serif;
     textAlign: center;
-    marginBottom: 1rem;
     color: black;
 }
