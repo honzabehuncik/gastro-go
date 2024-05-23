@@ -33,17 +33,29 @@ export default function DashboardPage() {
                 <div className="hero-section">
                     <div className="gradient-overlay"></div>
                     <div className="hero-content">
-                        <h1>Dashboard</h1>
+                        <h1>Uživatelský profil</h1>
                     </div>
                 </div>
                 <div className="dashboard-container">
                     {session ? (
                         <>
-                            <h1>Vítejte {session.user?.name}</h1>
-                            <p>Vaše role: {session.user?.role}</p>
-                            <button onClick={() => setIsOpenCourier(true)}>Přihlásit se jako kurýr</button>
-                            <button onClick={() => setIsOpenRestaurant(true)}>Zažádat o přidání restaurace</button>
-                            <button onClick={() => signOut()}>Odhlásit se</button>
+                        <div className="user-profile">
+                            <div className="user-card">
+                                <div className="user-avatar">
+                                    <img src={session.user?.image} alt="User Avatar" />
+                                </div>
+                                <div className="user-info">
+                                    <h1>{session.user?.name}</h1>
+                                    <p>{session.user?.role}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="user-actions">
+                                <button className="btn-primary" onClick={() => setIsOpenCourier(true)}>Přihlásit se jako kurýr</button>
+                                <button className="btn-primary" onClick={() => setIsOpenRestaurant(true)}>Zažádat o přidání restaurace</button>
+                                <button className="btn-logout" onClick={() => signOut()}>Odhlásit se</button>
+                            </div>
+
                         </>
                     ) : (
                         <>
