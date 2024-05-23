@@ -40,6 +40,13 @@ nav .location-icon {
     margin-right: 5px;
 }
 
+.user-menu {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    position: relative;
+}
+
 nav .user-button {
     width: 55px;
     height: 55px;
@@ -50,7 +57,7 @@ nav .user-button {
     align-items: center;
     cursor: pointer;
     border: none;
-    margin-right: 5%;
+    margin-left: 10px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -58,14 +65,126 @@ nav .user-button:hover {
     background-color: #60D140;
 }
 
+nav .user-icon {
+    font-size: 18px;
+    color: #000000;
+}
+
 nav .user-button:hover .user-icon {
     color: #FFFFFF;
 }
 
-nav .user-icon {
+nav .basket-button {
+    width: 55px;
+    height: 55px;
+    background-color: #EFEFEF;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    margin-left: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav .basket-button:hover {
+    background-color: #60D140;
+}
+
+nav .basket-button:hover .basket-icon {
+    color: #FFFFFF;
+}
+
+nav .basket-icon {
     font-size: 18px;
     color: #000000;
     transition: color 0.3s ease;
+}
+
+.dropdown-menu {
+    width: 300px;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.basket-dropdown {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.basket-items {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.basket-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #EFEFEF;
+}
+
+.basket-item .item-name {
+    color: #000000;
+}
+
+.basket-item .item-price {
+    color: #60D140;
+}
+
+.total-price {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.total-label {
+    color: #000000;
+}
+
+.total-amount {
+    color: #60D140;
+}
+
+.order-button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #60D140;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 500;
+}
+
+.order-button:hover {
+    background-color: #4CAF50;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: #333333;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-menu a:hover {
+    background-color: #F1F1F1;
 }
 
 nav .search-container {

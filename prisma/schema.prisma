@@ -1,12 +1,12 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
 datasource db {
   provider  = "postgresql"
   url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
-}
-
-generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
 }
 
 model Account {
@@ -15,15 +15,14 @@ model Account {
   type              String
   provider          String
   providerAccountId String  @map("provider_account_id")
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
@@ -45,13 +44,13 @@ model User {
   email         String?         @unique
   emailVerified DateTime?       @map("email_verified")
   image         String?
-  accounts      Account[]
-  sessions      Session[]
   role          String?
   address       String?
   phoneNumber   String?
-  driver        Driver?
   orders        CustomerOrder[]
+  driver        Driver?
+  accounts      Account[]
+  sessions      Session[]
 
   @@map("users")
 }
@@ -68,17 +67,17 @@ model VerificationToken {
 model Restaurant {
   id           String          @id @default(cuid())
   name         String
-  shortName    String?
   address      String
   phoneNumber  String?
   email        String?
   openingHours String?
-  imageUrl     String?
-  desc         String?
+  shortName    String?
   deliveryTime String?
-  badges       Badge[]         @relation("RestaurantId")
-  menus        Menu[]
+  desc         String?
+  imageUrl     String?
   orders       CustomerOrder[]
+  menus        Menu[]
+  badges       Badge[]         @relation("RestaurantId")
 }
 
 model Badge {
@@ -93,8 +92,8 @@ model Driver {
   userId       String          @unique
   vehicleInfo  String?
   availability Boolean         @default(true)
-  user         User            @relation(fields: [userId], references: [id])
   orders       CustomerOrder[]
+  user         User            @relation(fields: [userId], references: [id])
 }
 
 model Menu {
@@ -123,10 +122,10 @@ model CustomerOrder {
   totalPrice          Float
   statusId            String
   specialInstructions String?
-  user                User        @relation(fields: [userId], references: [id])
-  restaurant          Restaurant  @relation(fields: [restaurantId], references: [id])
   driver              Driver?     @relation(fields: [driverId], references: [id])
+  restaurant          Restaurant  @relation(fields: [restaurantId], references: [id])
   status              OrderStatus @relation(fields: [statusId], references: [id])
+  user                User        @relation(fields: [userId], references: [id])
   orderItems          OrderItem[]
 }
 
@@ -136,6 +135,6 @@ model OrderItem {
   menuId    String
   quantity  Int
   itemPrice Float
-  order     CustomerOrder @relation(fields: [orderId], references: [id])
   menu      Menu          @relation(fields: [menuId], references: [id])
+  order     CustomerOrder @relation(fields: [orderId], references: [id])
 }

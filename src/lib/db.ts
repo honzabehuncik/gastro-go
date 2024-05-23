@@ -10,3 +10,9 @@ export async function getRestaurants(){
     })
     return restaurants
 }
+
+export async function getCustomerOrder() {
+    const customerOrder = await prisma.customerOrder.findMany({
+    })
+    return customerOrder
+}
