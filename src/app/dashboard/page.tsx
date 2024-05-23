@@ -119,33 +119,33 @@ export default function DashboardPage() {
                                     <Form>
                                         <Input 
                                             type="text" 
-                                            placeholder="název" 
+                                            placeholder="název*" 
                                             name="name"
                                             value={restaurantForm.name}
                                             onChange={handleInputChange} 
                                         />
                                         <Input 
                                             type="text" 
-                                            placeholder="adresa" 
+                                            placeholder="adresa*" 
                                             name="address"
                                             value={restaurantForm.address}
                                             onChange={handleInputChange} 
                                         />
                                         <Input 
                                             type="email" 
-                                            placeholder="email" 
+                                            placeholder="email*" 
                                             name="email"
                                             value={restaurantForm.email}
                                             onChange={handleInputChange} 
                                         />
                                         <Input 
                                             type="tel" 
-                                            placeholder="telefon" 
+                                            placeholder="telefonní číslo*" 
                                             name="phone"
                                             value={restaurantForm.phone}
                                             onChange={handleInputChange} 
                                         />
-                                        <Heading2>Otevírací doba od:</Heading2>
+                                        <Heading2>Otevírací doba od:*</Heading2>
                                         <Input 
                                             type="time" 
                                             placeholder="Otevřeno od" 
@@ -153,7 +153,7 @@ export default function DashboardPage() {
                                             value={restaurantForm.openTime}
                                             onChange={handleInputChange} 
                                         />
-                                        <Heading2>Otevírací doba do:</Heading2>
+                                        <Heading2>Otevírací doba do:*</Heading2>
                                         <Input 
                                             type="time" 
                                             placeholder="Otevřeno do" 
@@ -200,7 +200,7 @@ You agree to use the Service only for lawful purposes and in accordance with the
 You are responsible for maintaining the confidentiality of your account and password, and you agree to accept responsibility for all activities that occur under your account or password.</p>
                                     <form>
                                         <CheckboxInput type="checkbox" id="agree" onChange={handleCheckboxChange} />
-                                        <CheckboxLabel htmlFor="agree">Souhlasím s podmínkami</CheckboxLabel><br></br>
+                                        <CheckboxLabel htmlFor="agree">Souhlasím s podmínkami*</CheckboxLabel><br></br>
                                         <SubmitButton onClick={() => setIsOpenCourier(false)} disabled={!isCheckboxChecked}>Přihlásit se</SubmitButton>
                                     </form>
                                 </Content>
