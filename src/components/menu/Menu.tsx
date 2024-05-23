@@ -4,7 +4,7 @@ import { getRestaurants } from "@/lib/db";
 import Tags from "@/components/tags/page";
 import { auth } from '@/auth';
 
-export default async function MenuPage({ searchParams }: { searchParams: { tags?: string } }) {
+export default async function Menu({ searchParams }: { searchParams: { tags?: string } }) {
     const session = await auth();
     const heading = !session ? "Neoprávněný přístup!" : "Administrace - rozvoz";
 
@@ -25,8 +25,8 @@ export default async function MenuPage({ searchParams }: { searchParams: { tags?
                             <h1>Na co máte chuť, {session.user?.name}?</h1>
                             <Tags />
                             <div className="card-container">
-                                {restaurants.map((restaurant: any) => (
-                                    <div key={restaurant.name} className="restaurant-card">
+                                {restaurants.map((restaurant: any, index:number) => (
+                                    <div key={index} className="restaurant-card">
                                         <img src={restaurant.imageUrl} alt={restaurant.name} className="restaurant-image" />
                                         <h2>{restaurant.name}</h2>
                                         <p>{restaurant.description}</p>
