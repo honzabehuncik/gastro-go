@@ -16,3 +16,21 @@ export async function getCustomerOrder() {
     })
     return customerOrder
 }
+
+export async function getRestaurant(shortName: string){
+    const restaurant = await prisma.restaurant.findMany({
+        where: {
+            shortName: shortName
+        },
+        include: {
+            badges: true,
+            Category: {
+                include: {
+                    menus: true
+                }
+            }
+        }
+    })
+
+    return restaurant.length > 0 ? restaurant[0] : null
+}
