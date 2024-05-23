@@ -127,8 +127,8 @@ model CustomerOrder {
   restaurantId        String
   driverId            String?
   orderDate           DateTime    @default(now())
-  deliveryAddress     String
-  totalPrice          Float
+  deliveryAddress     String?
+  totalPrice          Float?
   statusId            String
   specialInstructions String?
   driver              Driver?     @relation(fields: [driverId], references: [id])

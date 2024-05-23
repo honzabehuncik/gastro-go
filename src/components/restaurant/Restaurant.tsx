@@ -1,27 +1,24 @@
-"use client"
-
-import { signIn, signOut, useSession } from "next-auth/react";
+import { auth } from "@/auth";
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { IoIosAdd } from "react-icons/io";
 import "./restaurant.css";
 import { notFound } from "next/navigation";
+import { getSession } from "next-auth/react";
+import { addToCartDB } from "@/lib/db";
 
-export default function Restaurant({ restaurant }: { restaurant: any }) {
+export default async function Restaurant({ restaurant }: { restaurant: any }) {
     if (!restaurant) return notFound()
-    const [selectedTags, setSelectedTags] = useState<string[]>([]);
-    
-    const toggleTag = (tag: string) => {
-        if (selectedTags.includes(tag)) {
-            setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
-        } else {
-            setSelectedTags([...selectedTags, tag]);
-        }
-    };
 
-    const { data: session } = useSession();
+    const session = await auth()
     const heading = !session ? "Neoprávněný přístup!" : "Administrace - rozvoz";
 
+    async function addToCart(formData: FormData){
+        "use server"
+        const itemId = formData.get("id")
+        const userId = session!.user!.id
+        const order = addToCartDB(itemId as string, userId as string)
+    }
 
     return (
         <main>
@@ -72,9 +69,13 @@ export default function Restaurant({ restaurant }: { restaurant: any }) {
                                         <h3>{menu.price} Kč</h3>
                                         <p>{menu.description}</p>
                                         <div className="badges">
-                                            <button className="add-button">
-                                                <IoIosAdd className="plus-icon" />
-                                            </button>
+                                            <form action={addToCart}>
+                                                <input type="hidden" name="id" value={menu.id}/>
+                                                <input type="hidden" name="id" value={menu.id}/>
+                                                <button type="submit" className="add-button">
+                                                    <IoIosAdd className="plus-icon" />
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 ))}
