@@ -14,7 +14,8 @@ export default function Nav(){
 
     return (
         <>
-            {path == "/" && !session ? <NavLogin /> : <MenuNav />}
+            {!session && <NavLogin />}
+            {(session && path == "/") && <MenuNav />}
             {path == "/dashboard" && <DashboardNav />}
             {path == "/driver" && <DashboardNav />}
             {path == "/restaurants" && <DashboardNav />}

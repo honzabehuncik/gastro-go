@@ -26,18 +26,20 @@ export default async function Menu({ searchParams }: { searchParams: { tags?: st
                             <Tags />
                             <div className="card-container">
                                 {restaurants.map((restaurant: any, index:number) => (
-                                    <div key={index} className="restaurant-card">
-                                        <img src={restaurant.imageUrl} alt={restaurant.name} className="restaurant-image" />
-                                        <h2>{restaurant.name}</h2>
-                                        <p>{restaurant.description}</p>
-                                        <div className="badges">
-                                            {restaurant.badges.map((badge: any) => (
-                                                <span key={badge.label} className={`badge badge-${badge.type}`}>
-                                                    {badge.label}
-                                                </span>
-                                            ))}
+                                    <a key={index} href={`/${restaurant.shortName}`}>
+                                        <div className="restaurant-card">
+                                            <img src={restaurant.imageUrl} alt={restaurant.name} className="restaurant-image" />
+                                            <h2>{restaurant.name}</h2>
+                                            <p>{restaurant.description}</p>
+                                            <div className="badges">
+                                                {restaurant.badges.map((badge: any) => (
+                                                    <span key={badge.label} className={`badge badge-${badge.type}`}>
+                                                        {badge.label}
+                                                    </span>
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 ))}
                             </div>
                         </>
