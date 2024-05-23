@@ -16,13 +16,12 @@ export default function Nav(){
 
     return (
         <>
-            {!session && <NavLogin />}
-            {session && (isRestaurantRoute || path === "/") && <MenuNav />}
+            {!session && path === "/" && <NavLogin />}
             {path === "/dashboard" && <DashboardNav />}
             {path === "/driver" && <DashboardNav />}
             {path === "/restaurants" && <DashboardNav />}
             {path === "/status" && <DashboardNav />}
-            {!(path === "/" || path === "/dashboard" || path === "/menu" || path === "/driver" || path === "/restaurants" || path === "/status" || isRestaurantRoute ) && <NavLogin />}
+            {(!(path === "/dashboard" || path === "/menu" || path === "/driver" || path === "/restaurants" || path === "/status" )) && session && <MenuNav />}
         </>
     );
 };
