@@ -59,7 +59,7 @@
 
 .hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 0;
     padding-left: 5%;
 }
 
@@ -69,9 +69,66 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-h2 {
-    fontSize: 1px;
-    fontFamily: 'Montserrat', sans-serif;
-    textAlign: center;
-    color: black;
+.user-profile {
+    background-color: #EFEFEF;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info {
+    margin-left: 20px;
+}
+
+
+.user-info h1 {
+    font-size: 30px;
+    color: #333;
+    line-height: 0.5;
+}
+
+.user-info p {
+    color: #333;
+    font-size: 20px;
+}
+
+.user-actions button {
+    background-color: #60D140;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.user-actions .btn-logout {
+    background-color: #d14040;
+}
+
+.user-actions .btn-logout:hover {
+    background-color: #af4c4c;
+}
+
+.user-actions button:not(:first-child) {
+    margin-left: 10px;
+}
+
+.user-actions button:hover {
+    background-color: #4caf50;
 }

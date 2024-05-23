@@ -27,7 +27,7 @@ nav a.logo {
 .user-menu {
     display: flex;
     align-items: center;
-    margin-left: auto;
+    margin-left: 0;
     position: relative;
 }
 

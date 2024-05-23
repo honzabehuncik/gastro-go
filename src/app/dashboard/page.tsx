@@ -1,7 +1,7 @@
-"use client"
+"use client";
+
 import { signIn, signOut, useSession } from "next-auth/react";
-import React, { useState } from "react";
-import Link from "next/link";
+import React, { useState, useEffect } from "react";
 import { useTransition, animated } from '@react-spring/web';
 import { styled } from '@stitches/react';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -11,9 +11,37 @@ export default function DashboardPage() {
     const { data: session } = useSession();
     const [isOpenRestaurant, setIsOpenRestaurant] = useState(false);
     const [isOpenCourier, setIsOpenCourier] = useState(false);
+    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false); // New state for checkbox
 
-    const handleRestaurantDialogChange = (isOpen: boolean | ((prevState: boolean) => boolean)) => setIsOpenRestaurant(isOpen);
-    const handleCourierDialogChange = (isOpen: boolean | ((prevState: boolean) => boolean)) => setIsOpenCourier(isOpen);
+    const [restaurantForm, setRestaurantForm] = useState({
+        name: '',
+        address: '',
+        email: '',
+        phone: '',
+        openTime: '',
+        closeTime: ''
+    });
+    const [isRestaurantFormValid, setIsRestaurantFormValid] = useState(false);
+
+    useEffect(() => {
+        const isFormValid = Object.values(restaurantForm).every(field => field.trim() !== '');
+        setIsRestaurantFormValid(isFormValid);
+    }, [restaurantForm]);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setRestaurantForm(prevForm => ({
+            ...prevForm,
+            [name]: value
+        }));
+    };
+
+    const handleCheckboxChange = () => {
+        setIsCheckboxChecked(!isCheckboxChecked);
+    };
+
+    const handleRestaurantDialogChange = (isOpen) => setIsOpenRestaurant(isOpen);
+    const handleCourierDialogChange = (isOpen) => setIsOpenCourier(isOpen);
 
     const transitionRestaurant = useTransition(isOpenRestaurant, {
         from: { scale: 0.9, opacity: 0 },
@@ -33,17 +61,28 @@ export default function DashboardPage() {
                 <div className="hero-section">
                     <div className="gradient-overlay"></div>
                     <div className="hero-content">
-                        <h1>Dashboard</h1>
+                        <h1>Uživatelský profil</h1>
                     </div>
                 </div>
                 <div className="dashboard-container">
                     {session ? (
                         <>
-                            <h1>Vítejte {session.user?.name}</h1>
-                            <p>Vaše role: {session.user?.role}</p>
-                            <button onClick={() => setIsOpenCourier(true)}>Přihlásit se jako kurýr</button>
-                            <button onClick={() => setIsOpenRestaurant(true)}>Zažádat o přidání restaurace</button>
-                            <button onClick={() => signOut()}>Odhlásit se</button>
+                            <div className="user-profile">
+                                <div className="user-card">
+                                    <div className="user-avatar">
+                                        <img src={session.user?.image} alt="User Avatar" />
+                                    </div>
+                                    <div className="user-info">
+                                        <h1>{session.user?.name}</h1>
+                                        <p>{session.user?.role}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="user-actions">
+                                <button className="btn-primary" onClick={() => setIsOpenCourier(true)}>Přihlásit se jako kurýr</button>
+                                <button className="btn-primary" onClick={() => setIsOpenRestaurant(true)}>Zažádat o přidání restaurace</button>
+                                <button className="btn-logout" onClick={() => signOut()}>Odhlásit se</button>
+                            </div>
                         </>
                     ) : (
                         <>
@@ -78,15 +117,51 @@ export default function DashboardPage() {
                                     </DialogHeader>
                                     <Title>Zažádat o přidání restaurace</Title>
                                     <Form>
-                                        <Input type="text" placeholder="název" />
-                                        <Input type="text" placeholder="adresa" />
-                                        <Input type="email" placeholder="email" />
-                                        <Input type="tel" placeholder="telefon" />
-                                        <h2>Otevírací doba od:</h2>
-                                        <Input type="time" placeholder="Otevřeno od" />
-                                        <h2>Otevírací doba do:</h2>
-                                        <Input type="time" placeholder="Otevřeno do" />
-                                        <SubmitButton>Submit</SubmitButton>
+                                        <Input 
+                                            type="text" 
+                                            placeholder="název*" 
+                                            name="name"
+                                            value={restaurantForm.name}
+                                            onChange={handleInputChange} 
+                                        />
+                                        <Input 
+                                            type="text" 
+                                            placeholder="adresa*" 
+                                            name="address"
+                                            value={restaurantForm.address}
+                                            onChange={handleInputChange} 
+                                        />
+                                        <Input 
+                                            type="email" 
+                                            placeholder="email*" 
+                                            name="email"
+                                            value={restaurantForm.email}
+                                            onChange={handleInputChange} 
+                                        />
+                                        <Input 
+                                            type="tel" 
+                                            placeholder="telefonní číslo*" 
+                                            name="phone"
+                                            value={restaurantForm.phone}
+                                            onChange={handleInputChange} 
+                                        />
+                                        <Heading2>Otevírací doba od:*</Heading2>
+                                        <Input 
+                                            type="time" 
+                                            placeholder="Otevřeno od" 
+                                            name="openTime"
+                                            value={restaurantForm.openTime}
+                                            onChange={handleInputChange} 
+                                        />
+                                        <Heading2>Otevírací doba do:*</Heading2>
+                                        <Input 
+                                            type="time" 
+                                            placeholder="Otevřeno do" 
+                                            name="closeTime"
+                                            value={restaurantForm.closeTime}
+                                            onChange={handleInputChange} 
+                                        />
+                                        <SubmitButton disabled={!isRestaurantFormValid}>Odeslat</SubmitButton>
                                     </Form>
                                 </Content>
                             </DialogContainer>
@@ -124,9 +199,9 @@ You agree to use the Service only for lawful purposes and in accordance with the
 
 You are responsible for maintaining the confidentiality of your account and password, and you agree to accept responsibility for all activities that occur under your account or password.</p>
                                     <form>
-                                        <CheckboxInput type="checkbox" id="agree" />
-                                        <CheckboxLabel htmlFor="agree">Souhlasím s podmínkami</CheckboxLabel><br></br>
-                                        <SubmitButton onClick={() => setIsOpenCourier(false)}>Přihlásit se</SubmitButton>
+                                        <CheckboxInput type="checkbox" id="agree" onChange={handleCheckboxChange} />
+                                        <CheckboxLabel htmlFor="agree">Souhlasím s podmínkami*</CheckboxLabel><br></br>
+                                        <SubmitButton onClick={() => setIsOpenCourier(false)} disabled={!isCheckboxChecked}>Přihlásit se</SubmitButton>
                                     </form>
                                 </Content>
                             </DialogContainer>
@@ -147,9 +222,9 @@ const OverlayBackground = styled(Dialog.Overlay, {
 const Content = styled(Dialog.Content, {
     backgroundColor: 'white',
     borderRadius: 12,
-    padding: '24px 24px 32px',
+    padding: '10px 24px 32px',
     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-    width: '90%', // Adjusted width
+    width: '90%',
     maxWidth: '500px',
     zIndex: "1",
 });
@@ -185,6 +260,10 @@ const Title = styled(Dialog.Title, {
     color: 'black'
 });
 
+const Heading2 = styled('h2', {
+    fontSize: 15,
+});
+
 const Form = styled('form', {
     display: 'flex',
     flexDirection: 'column',
@@ -205,7 +284,6 @@ const Input = styled('input', {
     },
 });
 
-
 const CheckboxInput = styled('input', {
     marginRight: '8px',
 });
@@ -218,15 +296,20 @@ const CheckboxLabel = styled('label', {
 const SubmitButton = styled('button', {
     padding: '0.75rem',
     fontSize: '1rem',
+    width: '100%',
     fontFamily: 'Montserrat, sans-serif',
     borderRadius: '12px',
     border: 'none',
     marginTop: '2rem',
-    marginLeft: '35%',
+    alignItems: 'center',
     backgroundColor: '#60D140',
     color: '#fff',
     cursor: 'pointer',
     '&:hover': {
         backgroundColor: '#4caf50',
+    },
+    '&:disabled': {
+        backgroundColor: '#ccc',
+        cursor: 'not-allowed',
     },
 });
