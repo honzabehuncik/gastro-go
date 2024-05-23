@@ -10,7 +10,6 @@ nav {
     width: 100%;
     max-width: 1920px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 0 20px;
     border-bottom: 2px solid #EFEFEF;
@@ -26,6 +25,9 @@ nav a.logo {
 }
 
 .user-menu {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
     position: relative;
 }
 
@@ -39,7 +41,7 @@ nav .user-button {
     align-items: center;
     cursor: pointer;
     border: none;
-    margin-right: 5%;
+    margin-left: 10px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -56,6 +58,34 @@ nav .user-button:hover .user-icon {
     color: #FFFFFF;
 }
 
+nav .basket-button {
+    width: 55px;
+    height: 55px;
+    background-color: #EFEFEF;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    margin-left: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav .basket-button:hover {
+    background-color: #60D140;
+}
+
+nav .basket-button:hover .basket-icon {
+    color: #FFFFFF;
+}
+
+nav .basket-icon {
+    font-size: 18px;
+    color: #000000;
+    transition: color 0.3s ease;
+}
+
 .dropdown-menu {
     width: 300px;
     position: absolute;
@@ -66,6 +96,67 @@ nav .user-button:hover .user-icon {
     border-radius: 8px;
     overflow: hidden;
     z-index: 1000;
+}
+
+.basket-dropdown {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.basket-items {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.basket-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #EFEFEF;
+}
+
+.basket-item .item-name {
+    color: #000000;
+}
+
+.basket-item .item-price {
+    color: #60D140;
+}
+
+.total-price {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.total-label {
+    color: #000000;
+}
+
+.total-amount {
+    color: #60D140;
+}
+
+.order-button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #60D140;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 500;
+}
+
+.order-button:hover {
+    background-color: #4CAF50;
 }
 
 .dropdown-menu a {

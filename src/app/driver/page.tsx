@@ -1,8 +1,9 @@
-"use client"
 
 import { signIn, useSession } from "next-auth/react";
 import React from "react";
 import "./driver.css";
+import { getCustomerOrder } from "@/lib/db";
+import { auth } from '@/auth';
 
 const orders = [
     {
@@ -39,9 +40,11 @@ const orders = [
     },
 ];
 
-export default function DriverPage() {
-    const { data: session } = useSession();
-    const heading = !session ? "Neoprávněný přístup!" : "Rozvoz panel";
+export default async function DriverPage() {
+    const session = await auth();
+    const heading = !session ? "Neoprávněný přístup!" : "Administrace - rozvoz";
+
+    let customerOrder = await getCustomerOrder();
     return (
         <main>
             <div className="driver">
@@ -60,15 +63,15 @@ export default function DriverPage() {
                                 <br></br>Vybranou objednávku nejprve přiřaďte a poté se můžete pustit do práce!
                                 </p>
                             <div className="order-table">
-                                {orders.map((order) => (
+                                {customerOrder.map((order: any) => (
                                     <div key={order.id} className="order-row">
-                                        <div className={`order-status status-${order.statusClass}`}>
+                                        <div className={`order-status status-recorded`}>
                                             {order.status}
                                         </div>
                                         <div className="order-id">ID: #{order.id}</div>
                                         <div className="order-details">
-                                            <strong>Název: </strong>{order.name}<br/>
-                                            <strong>Adresa: </strong>{order.address}<br/>
+                                            <strong>Název: </strong>{order.orderItems}<br/>
+                                            <strong>Adresa: </strong>{order.deliveryAdress}<br/>
                                             <strong>Čas doručení: </strong>{order.deliveryTime}
                                         </div>
                                         <button className="assign-button">Přiřadit objednávku</button>
