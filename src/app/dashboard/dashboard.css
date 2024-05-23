@@ -69,13 +69,6 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-h2 {
-    fontSize: 15px;
-    fontFamily: 'Montserrat', sans-serif;
-    textAlign: center;
-    color: black;
-}
-
 .user-profile {
     background-color: #EFEFEF;
     padding: 20px;

@@ -261,8 +261,7 @@ const Title = styled(Dialog.Title, {
 });
 
 const Heading2 = styled('h2', {
-    fontSize: 10,
-    marginBottom: '1%',
+    fontSize: 15,
 });
 
 const Form = styled('form', {
