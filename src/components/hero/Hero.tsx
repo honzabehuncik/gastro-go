@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { useTransition, animated } from "@react-spring/web";
-import Link from "next/link";
 import "./hero.css";
 import { IoSearch } from "react-icons/io5";
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 import "./menu-navbar.css";
 import { FaUser, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import { signOut } from "next-auth/react";
+import Search from "@/components/nav/menu-search"
 
 export default function MenuNav() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -15,18 +16,7 @@ export default function MenuNav() {
             <nav>
                 <div className="logo-container">
                     <Link href="/" className="logo">GastroGO</Link>
-                    <div className="location">
-                        <FaMapMarkerAlt className="location-icon" />
-                        <span>Adresa doručení</span>
-                    </div>
-                </div>
-                <div className="search-container">
-                    <FaSearch className="search-icon" />
-                    <input
-                        type="text"
-                        className="search-input"
-                        placeholder="Vyhledat na GastroGo..."
-                    />
+                    <Search/>
                 </div>
                 <div className="user-menu">
                     <button className="user-button" onClick={toggleDropdown}>
