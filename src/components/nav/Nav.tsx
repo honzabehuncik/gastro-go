@@ -6,15 +6,16 @@ import { usePathname } from "next/navigation";
 import NavLogin from "./login-nav";
 import DashboardNav from "./dashboard-nav";
 import MenuNav from "./menu-nav";
+import { useSession } from "next-auth/react";
 
 export default function Nav(){
     const path = usePathname()
+    const { data: session } = useSession();
 
     return (
         <>
-            {path == "/" && <NavLogin />}
+            {path == "/" && !session ? <NavLogin /> : <MenuNav />}
             {path == "/dashboard" && <DashboardNav />}
-            {path == "/menu" && <MenuNav />}
             {path == "/driver" && <DashboardNav />}
             {path == "/restaurants" && <DashboardNav />}
             {path == "/status" && <DashboardNav />}

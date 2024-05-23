@@ -25,7 +25,7 @@ export default function Hero() {
     });
 
     return (
-        <div>
+        <div className="hero">
             <div className="container">
                 <section className="landing">
                     {transitions((style, item) => (

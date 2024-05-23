@@ -1,11 +1,16 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { auth } from "@/auth";
 import Hero from "@/components/hero/Hero";
+import Menu from "@/components/menu/Menu"
 
-export default function Home() {
+export default async function Home({ searchParams }: { searchParams: { tags?: string } }) {
+  const session = await auth();
   return (
-    <main className={styles.main}>
-        <Hero/>
+    <main>
+        {session ? (
+          <Menu searchParams={searchParams}/>
+        ) :(
+          <Hero/>
+        )}
     </main>
   );
 }
