@@ -4,47 +4,17 @@ import React from "react";
 import "./driver.css";
 import { getCustomerOrder } from "@/lib/db";
 import { auth } from '@/auth';
+import { parseISO, addMinutes, format } from 'date-fns';
 
-const orders = [
-    {
-        id: "001",
-        name: "Objednávka 1",
-        address: "Ulice 123, Město",
-        deliveryTime: "19:35",
-        status: "⌛ Připravuje se",
-        statusClass: "preparing",
-    },
-    {
-        id: "002",
-        name: "Objednávka 2",
-        address: "Ulice 456, Město",
-        deliveryTime: "20:00",
-        status: "🚴 Doručování",
-        statusClass: "delivering",
-    },
-    {
-        id: "003",
-        name: "Objednávka 3",
-        address: "Ulice 789, Město",
-        deliveryTime: "20:30",
-        status: "✅ Doručeno",
-        statusClass: "delivered",
-    },
-    {
-        id: "004",
-        name: "Objednávka 4",
-        address: "Ulice 101, Město",
-        deliveryTime: "21:00",
-        status: "👍 Zaznamenáno",
-        statusClass: "recorded",
-    },
-];
+
 
 export default async function DriverPage() {
     const session = await auth();
     const heading = !session ? "Neoprávněný přístup!" : "Administrace - rozvoz";
 
     let customerOrder = await getCustomerOrder();
+    console.log(customerOrder)
+
     return (
         <main>
             <div className="driver">
@@ -70,10 +40,11 @@ export default async function DriverPage() {
                                         </div>
                                         <div className="order-id">ID: #{order.id}</div>
                                         <div className="order-details">
-                                            <strong>Název: </strong><br/>
-                                            <strong>Počet kusů: </strong>{order.orderItems}<br/>
-                                            <strong>Adresa: </strong>{order.deliveryAddress}<br/>
-                                            <strong>Čas doručení: </strong>{order.deliveryTime}
+                                            <strong>Název: {order.restaurant.name}</strong><br/>
+                                            <strong>Počet kusů: </strong>{order.orderItems.length}<br/>
+                                            <strong>Adresa: {order.restaurant.address}</strong>{order.deliveryAddress}<br/>
+                                            <strong>Čas objednání: </strong>{format(new Date(order.orderDate), "dd.MM.yyyy HH:mm")}<br/>
+                                            <strong>Čas doručení: </strong>{format(addMinutes(new Date(order.orderDate), 40), "dd.MM.yyyy HH:mm")}
                                         </div>
                                         <button className="assign-button">Přiřadit objednávku</button>
                                         <button className="edit-button">Spravovat</button>
