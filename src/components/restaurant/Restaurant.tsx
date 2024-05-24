@@ -56,14 +56,13 @@ export default async function Restaurant({ restaurant }: { restaurant: any }) {
 
                     
 
-                    {restaurant.Category.map((category: any) => (
+                        {restaurant.Category.map((category: any) => (
                         <>
                             <h1>{category.name}</h1>
                             <div className="card-container">
                                 {category.menus.map((menu: any) => (
                                     <div key={menu.name} className="food-card">
                                         <img src={menu.imageUrl} alt={menu.name} className="food-image" />
-                                        <div className="card-header">
                                         <h2>{menu.name}</h2>
                                         <h3>{menu.price as string} Kč</h3>
                                         <p>{menu.description}</p>
