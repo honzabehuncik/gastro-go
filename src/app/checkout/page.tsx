@@ -1,8 +1,8 @@
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
 import React from "react";
 import "./checkout.css";
 import { auth } from '@/auth';
-import { FaTimes } from 'react-icons/fa';
 
 const orders = [
     {
@@ -13,13 +13,15 @@ const orders = [
         price: "150",
     },
     {
-        id: "001",
+        id: "002",
         item: "Kebab klasický",
         details: "Kebab klasický s bylinkovou omáčkou",
         quantity: "3",
         price: "150",
     },
 ];
+
+const totalPrice = orders.reduce((total, item) => total + (parseFloat(item.price) * parseInt(item.quantity)), 0);
 
 export default async function CheckoutPage() {
     const session = await auth();
@@ -41,13 +43,13 @@ export default async function CheckoutPage() {
                             <p>
                                 Níže nalezne kompletní přehled vaší objednávky.
                                 <br></br>Objednávku můžete libovolně měnit, případně můžete přidávat další položky.
-                                </p>
+                            </p>
                             <div className="order-table">
-                                {orders.map((order: any) => (
+                                {orders.map((order) => (
                                     <div key={order.id} className="order-row">
                                         <div className="order-details">
                                             <div className="order-heading">
-                                            <strong><span className="quantity-color">{order.quantity}x</span> {order.item}</strong><br/>
+                                                <strong><span className="quantity-color">{order.quantity}x</span> {order.item}</strong><br/>
                                             </div>
                                             {order.details}<br/>
                                             <div className="button-container">
@@ -56,14 +58,15 @@ export default async function CheckoutPage() {
                                             </div>
                                         </div>
                                         <div className="price">
-                                            <p>{order.price} Kč</p>
+                                            <p>{parseFloat(order.price) * parseInt(order.quantity)} Kč</p>
                                         </div>              
                                     </div>
                                 ))}
                             </div>
                             <div className="final-price">
-                                <p>Celková cena: <span className="price-highlited">300 Kč</span></p>
+                                <p>Celková cena: <span className="price-highlighted">{totalPrice} Kč</span></p>
                             </div>
+                            <Link href="/status"><button className="add-button">Objednat</button></Link>
                         </>
                     ) : (
                         <>
