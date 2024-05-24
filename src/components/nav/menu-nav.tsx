@@ -13,7 +13,6 @@ export default async function DashboardNav(){
     if(session?.user?.id){
         orders = await getOrders(session?.user?.id)
         order = orders[0].orderItems
-        console.log(order)
     }
 
     return (
