@@ -1,45 +1,21 @@
-"use client"
-
 import { auth } from "@/auth";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 import "./restaurant.css";
 import { notFound } from "next/navigation";
 import { addToCartDB } from "@/lib/db";
 
-export default function Restaurant({ restaurant }: { restaurant: any }) {
-    if (!restaurant) return notFound();
+export default async function Restaurant({ restaurant }: { restaurant: any }) {
+    if (!restaurant) return notFound()
 
-    const [notificationVisible, setNotificationVisible] = useState(false);
-    const [session, setSession] = useState(null);
+    const session = await auth()
+    const heading = !session ? "Neoprávněný přístup!" : "Administrace - rozvoz";
 
-    useEffect(() => {
-        async function getSession() {
-            try {
-                const sessionData = await auth();
-                setSession(sessionData);
-            } catch (error) {
-                console.error("Error fetching session:", error);
-            }
-        }
-
-        getSession();
-    }, []);
-
-    async function addToCart(formData: FormData) {
-        const itemId = formData.get("id");
-        const userId = session?.user?.id;
-        if (userId) {
-            try {
-                await addToCartDB(itemId as string, userId as string);
-                setNotificationVisible(true);
-                setTimeout(() => {
-                    setNotificationVisible(false); // Změněno na false
-                }, 3000);
-            } catch (error) {
-                console.error("Error adding to cart:", error);
-            }
-        }
+    async function addToCart(formData: FormData){
+        "use server"
+        const itemId = formData.get("id")
+        const userId = session!.user!.id
+        const order = addToCartDB(itemId as string, userId as string)
     }
 
     return (
@@ -55,7 +31,32 @@ export default function Restaurant({ restaurant }: { restaurant: any }) {
 
             <div className="menu-detailed">
                 <div className="menu-detailed-container">
-                    {restaurant.Category.map((category: any) => (
+                        {/* <div>
+                            {restaurant.badges.map((badge: any) => (
+                                <span
+                                    key={badge}
+                                    className={`tag ${selectedTags.includes(badge.label) ? 'active' : ''}`}
+                                    onClick={() => toggleTag(badge.label)}
+                                >
+                                    {badge.label}
+                                </span>
+                            ))}
+                        </div> 
+
+                        <div className="searchbar-container">
+                            <FaSearch className="searchbar-icon" />
+                            <input
+                            type="text"
+                            className="searchbar-input"
+                            placeholder="Na co máte chuť?"/>
+                            <button className="find-button">
+                                <a href="#">Hledat</a>
+                            </button>
+                        </div> */}
+
+                    
+
+                        {restaurant.Category.map((category: any) => (
                         <>
                             <h1>{category.name}</h1>
                             <div className="card-container">
@@ -66,7 +67,8 @@ export default function Restaurant({ restaurant }: { restaurant: any }) {
                                         <h3>{menu.price as string} Kč</h3>
                                         <p>{menu.description}</p>
                                         <div className="badges">
-                                            <form onSubmit={(e) => { e.preventDefault(); addToCart(new FormData(e.target as HTMLFormElement)); }}>
+                                            <form action={addToCart}>
+                                                <input type="hidden" name="id" value={menu.id}/>
                                                 <input type="hidden" name="id" value={menu.id}/>
                                                 <button type="submit" className="add-button">
                                                     <IoIosAdd className="plus-icon" />
@@ -80,12 +82,6 @@ export default function Restaurant({ restaurant }: { restaurant: any }) {
                     ))}
                 </div>
             </div>
-
-            {notificationVisible && (
-                <div className="notification">
-                    Produkt byl úspěšně přidán do košíku
-                </div>
-            )}
         </main>
     );
 }
