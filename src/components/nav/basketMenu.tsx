@@ -64,7 +64,9 @@ export default function BasketMenu(order: any){
                             <span className="total-label">Celková cena:</span>
                             <span className="total-amount">{totalPrice} Kč</span>
                         </div>
-                        <button className="order-button"><Link href="/checkout">Objednat</Link></button>
+                        <button className="order-button">
+                            <Link className="order-link" href="/checkout">Objednat</Link>
+                        </button>
                     </div>
                 )}
             </div>
