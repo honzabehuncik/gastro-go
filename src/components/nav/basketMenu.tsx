@@ -78,7 +78,7 @@ export default function BasketMenu(order: any){
                     <div className="dropdown-menu">
                         <Link href="/dashboard">👤 Účet</Link>
                         <Link href="/driver">📝 Kariéra</Link>
-                        <Link href="/driver">🍕 Přidat restauraci</Link>
+                        <Link href="/dashboard">🍕 Přidat restauraci</Link>
                         <Link href="" onClick={() => signOut()}>👋🏼 Odhlásit se</Link>
                     </div>
                 )}
