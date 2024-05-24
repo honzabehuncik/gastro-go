@@ -125,3 +125,23 @@ export async function addToCartDB(id: string, userId: string){
         
     }
 }
+
+export async function getOrders(id: string){
+    const user = await getUser(id)
+    const order = user?.orders[0]
+    const orderId = order?.id
+
+    const orders = await prisma.customerOrder.findMany({
+        where: {
+            id: orderId
+        },
+        include: {
+            orderItems: {
+                include:{
+                    menu: true
+                }
+            }
+        }
+    })
+    return orders
+}
