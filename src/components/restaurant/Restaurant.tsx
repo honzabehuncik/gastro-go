@@ -65,9 +65,7 @@ export default async function Restaurant({ restaurant }: { restaurant: any }) {
                                         <img src={menu.imageUrl} alt={menu.name} className="food-image" />
                                         <div className="card-header">
                                         <h2>{menu.name}</h2>
-                                        <h3><strong>{menu.price} Kč</strong></h3>
-                                        </div>
-                                        
+                                        <h3>{menu.price as string} Kč</h3>
                                         <p>{menu.description}</p>
                                         <div className="badges">
                                             <form action={addToCart}>

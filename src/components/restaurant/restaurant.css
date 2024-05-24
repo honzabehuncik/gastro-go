@@ -120,11 +120,8 @@
 .food-card h2, .food-card h3 {
     font-size: 20px;
     color: #333;
-    margin: 0;
-}
-
-.food-card h3 {
-    color: #60D140;
+    font-weight: normal;
+    margin-left: 15px;
 }
 
 .food-card p {
