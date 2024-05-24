@@ -145,17 +145,27 @@ nav .basket-icon {
 
 .order-button {
     margin-top: 10px;
-    padding: 10px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.order-link {
+    display: block;
+    padding: 10px 20px;
     background-color: #60D140;
     color: #FFFFFF;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    font-weight: 500;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
 }
 
-.order-button:hover {
+.order-link:hover {
     background-color: #4CAF50;
 }
 
@@ -169,4 +179,13 @@ nav .basket-icon {
 
 .dropdown-menu a:hover {
     background-color: #F1F1F1;
+}
+
+.dropdown-menu .order-link {
+    background-color: #60D140;
+    color: #FFFFFF;
+}
+
+.dropdown-menu .order-link:hover {
+    background-color: #4CAF50;
 }
