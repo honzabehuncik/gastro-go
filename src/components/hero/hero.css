@@ -12,7 +12,7 @@
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     position: absolute;
-    top: 25vh;
+    top: 15vh;
     left: 5%;
     letter-spacing: 0.2vw;
     z-index: 1;
@@ -55,7 +55,7 @@
 .hero .aboutus-img {
     width: 30vw;
     position: absolute;
-    top: 15vh;
+    top: 20vh;
     right: 15%;
     z-index: 1;
 }
@@ -66,7 +66,7 @@
     background-color: white;
     border-radius: 25px;
     position: absolute;
-    top: 63vh;
+    top: 55vh;
     left: 5%;
     z-index: 1;
     display: flex;
@@ -107,6 +107,11 @@
 
 .hero .search-icon {
     padding-right: 5%;
+}
+
+.hero .find-button a {
+    color: white;
+    text-decoration: none;
 }
 
 @media (max-width: 1024px) {
