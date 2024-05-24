@@ -1,15 +1,16 @@
 "use client";
 
 import { signIn, useSession } from "next-auth/react";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./status.css";
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import { FaInfoCircle } from 'react-icons/fa';
 import { TbCircleNumber1Filled, TbCircleNumber2Filled, TbCircleNumber3Filled } from "react-icons/tb";
 
+const totalMinutes = 45; // time remaining in minutes
+
 const minuteSeconds = 60;
-const hourSeconds = 3600;
-const remainingTime = 1800;
+const remainingTime = totalMinutes * minuteSeconds;
 
 const timerProps = {
   isPlaying: true,
@@ -17,7 +18,17 @@ const timerProps = {
   strokeWidth: 13
 };
 
-const renderTime = (dimension: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | Promise<React.AwaitedReactNode> | null | undefined, time: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | Promise<React.AwaitedReactNode> | null | undefined) => {
+const renderTime = (dimension: string, time: number) => {
+    if (time === 0) {
+        return (
+          <div className="time-wrapper">
+            <div className="time-finished">👍</div>
+            <div className="time-description">
+              Objednávka právě<br></br>dorazila k vám!
+            </div>
+          </div>
+        );
+    }
     return (
       <div className="time-wrapper">
         <div className="time">{time}</div>
@@ -29,9 +40,9 @@ const renderTime = (dimension: string | number | bigint | boolean | React.ReactE
         </div>
       </div>
     );
-  };
+};
 
-const getTimeMinutes = (time: number) => ((time % remainingTime) / minuteSeconds) | 0;
+const getTimeMinutes = (time: number) => Math.ceil((time % remainingTime) / minuteSeconds);
 
 export default function DashboardPage() {
     const { data: session } = useSession();
@@ -58,16 +69,16 @@ export default function DashboardPage() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="order-step secondary">
+                                <div className="order-step inactive">
                                     <div className="order-content">
                                         <TbCircleNumber2Filled className="icon" />
                                         <div>
-                                            <h3>Objednávka je na cestě!</h3>
+                                            <h2>Objednávka je na cestě!</h2>
                                             <p>Vaše objednávka je na cestě, buďte připraveni na doručení.</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="order-step secondary">
+                                <div className="order-step inactive">
                                     <div className="order-content">
                                         <TbCircleNumber3Filled className="icon" />
                                         <div>
@@ -90,7 +101,7 @@ export default function DashboardPage() {
                             <CountdownCircleTimer
                                 {...timerProps}
                                 colors={["#e51f1f", "#f2a134", "#f7e379", "#bbdb44", "#44ce1b"]}
-                                colorsTime={[1800, 1200, 600, 300, 0]}
+                                colorsTime={[remainingTime, remainingTime * 0.666, remainingTime * 0.333, remainingTime * 0.166, 0]}
                                 duration={remainingTime}
                                 rotation="counterclockwise"
                                 initialRemainingTime={remainingTime}
@@ -100,7 +111,7 @@ export default function DashboardPage() {
                             >
                                 {({ elapsedTime, color }) => (
                                     <span style={{ color }}>
-                                        {renderTime("minut", getTimeMinutes(hourSeconds - elapsedTime))}
+                                        {renderTime("minut", getTimeMinutes(remainingTime - elapsedTime))}
                                     </span>
                                 )}
                             </CountdownCircleTimer>

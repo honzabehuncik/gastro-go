@@ -84,7 +84,7 @@
     border-color: #60D140;
 }
 
-.order-step.secondary {
+.order-step.inactive {
     border-color: #ccc;
 }
 
@@ -109,7 +109,7 @@
     font-size: 40px;
 }
 
-.order-step.secondary .icon {
+.order-step.inactive .icon {
     color: #ccc;
 }
 
@@ -124,6 +124,13 @@
     margin-bottom: 5px;
 }
 
+.order-step.inactive h2 {
+    color: #333;
+    font-weight: 450;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
 .order-step h3 {
     color: #333;
     font-weight: 450;
@@ -134,10 +141,6 @@
 .order-step p {
     color: #333;
     font-size: 16px;
-}
-
-.order-step.secondary h2 {
-    color: #999;
 }
 
 .order-step.info h3 {
@@ -164,6 +167,16 @@
 .time {
     font-size: 75px;
     font-weight: 650;
+    color: #333;
+    line-height: 1;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.time-finished {
+    font-size: 75px;
+    font-weight: 650;
+    margin-bottom: 12%;
     color: #333;
     line-height: 1;
     text-align: center;
