@@ -7,7 +7,7 @@ import { FaBasketShopping } from "react-icons/fa6";
 import "./navbar.css";
 import { signOut } from "next-auth/react";
 
-const DashboardNav: React.FC = () => {
+export default function DashboardNav(order:any){
     const [basketDropdownOpen, setBasketDropdownOpen] = useState(false);
     const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
@@ -38,13 +38,12 @@ const DashboardNav: React.FC = () => {
         setUserDropdownOpen(!userDropdownOpen);
     };
 
-    const basketItems = [
-        { id: 1, name: "Pizza Margherita", price: 150 },
-        { id: 2, name: "Spaghetti Carbonara", price: 200 },
-        { id: 3, name: "Caesar Salad", price: 120 },
-    ];
 
-    const totalPrice = basketItems.reduce((total, item) => total + item.price, 0);
+    let totalPrice = 0;
+
+    for (let i = 0; i < order.order.length; i++) {
+        totalPrice += order.order[i].itemPrice * order.order[i].quantity;
+    }
 
     return (
         <header>
@@ -58,11 +57,11 @@ const DashboardNav: React.FC = () => {
                         {basketDropdownOpen && (
                             <div className="dropdown-menu basket-dropdown">
                                 <ul className="basket-items">
-                                    {basketItems.map(item => (
-                                        <li key={item.id} className="basket-item">
-                                            <span className="item-name">{item.name}</span>
-                                            <span className="item-price">{item.price} Kč</span>
-                                        </li>
+                                    {order.order.map((item:any) => (
+                                    <li key={item.menu.id} className="basket-item">
+                                        <span className="item-name">{item.menu.name}</span>
+                                        <span className="item-price">{item.menu.price} Kč</span>
+                                    </li>
                                     ))}
                                 </ul>
                                 <div className="total-price">
@@ -81,7 +80,7 @@ const DashboardNav: React.FC = () => {
                             <div className="dropdown-menu">
                                 <Link href="/dashboard">👤 Účet</Link>
                                 <Link href="/driver">📝 Kariéra</Link>
-                                <Link href="/driver">🍕 Přidat restauraci</Link>
+                                <Link href="/dashboard">🍕 Přidat restauraci</Link>
                                 <Link href="" onClick={() => signOut()}>👋🏼 Odhlásit se</Link>
                             </div>
                         )}
@@ -91,5 +90,3 @@ const DashboardNav: React.FC = () => {
         </header>
     );
 };
-
-export default DashboardNav;

@@ -25,7 +25,7 @@ export default function AutoComplete(){
     <div style={{width: "400px"}}>
     <ReactSearchAutocomplete
       styling={
-        {borderRadius: "12px", backgroundColor: "#EFEFEF;"}
+        {borderRadius: "12px", backgroundColor: "#EFEFEF;", zIndex: 99}
       }
       items={items}
       onSearch={fetchData}
