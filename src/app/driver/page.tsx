@@ -70,8 +70,9 @@ export default async function DriverPage() {
                                         </div>
                                         <div className="order-id">ID: #{order.id}</div>
                                         <div className="order-details">
-                                            <strong>Název: </strong>{order.orderItems}<br/>
-                                            <strong>Adresa: </strong>{order.deliveryAdress}<br/>
+                                            <strong>Název: </strong><br/>
+                                            <strong>Počet kusů: </strong>{order.orderItems}<br/>
+                                            <strong>Adresa: </strong>{order.deliveryAddress}<br/>
                                             <strong>Čas doručení: </strong>{order.deliveryTime}
                                         </div>
                                         <button className="assign-button">Přiřadit objednávku</button>
