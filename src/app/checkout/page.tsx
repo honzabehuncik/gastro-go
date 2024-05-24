@@ -13,11 +13,12 @@ export default async function CheckoutPage() {
     let totalPrice = 0
     if(session?.user?.id){
         orders = await getOrders(session?.user?.id)
-        order = orders[0].orderItems
-
-        totalPrice = 0;
-        for (let i = 0; i < order.length; i++) {
-            totalPrice += order[i].itemPrice * order[i].quantity;
+        if(orders && orders.length > 0){
+            order = orders[0].orderItems 
+            totalPrice = 0;
+            for (let i = 0; i < order.length; i++) {
+                totalPrice += order[i].itemPrice * order[i].quantity;
+            }
         }
     }
     

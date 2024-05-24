@@ -39,9 +39,10 @@ export default function BasketMenu(order: any){
     };
 
     let totalPrice = 0;
-
-    for (let i = 0; i < order.order.length; i++) {
-        totalPrice += order.order[i].itemPrice * order.order[i].quantity;
+    if(order && order.length > 0){
+        for (let i = 0; i < order.order.length; i++) {
+            totalPrice += order.order[i].itemPrice * order.order[i].quantity;
+        }
     }
 
     return(
@@ -53,12 +54,22 @@ export default function BasketMenu(order: any){
                 {basketDropdownOpen && (
                     <div className="dropdown-menu basket-dropdown">
                         <ul className="basket-items">
-                            {order.order.map((item:any) => (
-                                <li key={item.menu.id} className="basket-item">
-                                    <span className="item-name">{item.menu.name}</span>
-                                    <span className="item-price">{item.menu.price} Kč</span>
+                        {order && order.length > 0 ? (
+                            <ul>
+                                {order.map((item: any) => (
+                                    <li key={item.menu.id} className="basket-item">
+                                        <span className="item-name">{item.menu.name}</span>
+                                        <span className="item-price">{item.menu.price} Kč</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <ul>
+                                <li className="basket-item">
+                                  
                                 </li>
-                            ))}
+                            </ul>
+                        )}
                         </ul>
                         <div className="total-price">
                             <span className="total-label">Celková cena:</span>
