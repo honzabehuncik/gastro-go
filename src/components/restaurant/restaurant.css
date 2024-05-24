@@ -109,22 +109,22 @@
     object-fit: cover;
 }
 
-.food-card h2 {
-    font-size: 20px;
-    color: #333;
+.food-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 15px;
     margin-bottom: 5px;
-    text-align: left;
+}
+
+.food-card h2, .food-card h3 {
+    font-size: 20px;
+    color: #333;
+    margin: 0;
 }
 
 .food-card h3 {
-    font-size: 20px;
-    color: #333;
-    font-weight: normal;
-    margin-left: 290px;
-    margin-top: -25px;
-    margin-bottom: 5px;
-    text-align: left;
+    color: #60D140;
 }
 
 .food-card p {
@@ -234,4 +234,22 @@ h1 {
 .plus-icon {
     width: 30px;
     height: 30px;
+}
+
+@media (max-width: 1200px) {
+    .food-card {
+        width: calc(32% - 20px);
+    }
+}
+
+@media (max-width: 992px) {
+    .food-card {
+        width: calc(48% - 20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .food-card {
+        width: calc(100% - 20px);
+    }
 }
