@@ -26,6 +26,10 @@ export async function getUser(id: string){
 
 export async function getCustomerOrder() {
     const customerOrder = await prisma.customerOrder.findMany({
+        include:{
+            restaurant: true,
+            orderItems: true
+        }
     })
     return customerOrder
 }
