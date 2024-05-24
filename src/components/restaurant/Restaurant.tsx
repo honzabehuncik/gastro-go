@@ -1,10 +1,8 @@
 import { auth } from "@/auth";
 import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa";
 import { IoIosAdd } from "react-icons/io";
 import "./restaurant.css";
 import { notFound } from "next/navigation";
-import { getSession } from "next-auth/react";
 import { addToCartDB } from "@/lib/db";
 
 export default async function Restaurant({ restaurant }: { restaurant: any }) {

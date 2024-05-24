@@ -1,19 +1,16 @@
-"use client"
-
 import React from "react";
 import "./navbar.css";
-import { usePathname } from "next/navigation";
 import NavLogin from "./login-nav";
 import DashboardNav from "./dashboard-nav";
 import MenuNav from "./menu-nav";
 import { useSession } from "next-auth/react";
+import { headers } from "next/headers";
+import { auth } from "@/auth";
 
-export default function Nav(){
-    const path = usePathname();
-    const { data: session } = useSession();
-
-    const isRestaurantRoute = /^\/[^\/]+$/.test(path);
-
+export default async function Nav(){
+    const headerList = headers();
+    const path = headerList.get("x-current-path");
+    const session = await auth()
     return (
         <>
             {!session && path === "/" && <NavLogin />}
