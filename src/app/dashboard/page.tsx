@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import React, { useState, useEffect } from "react";
@@ -11,7 +11,8 @@ export default function DashboardPage() {
     const { data: session } = useSession();
     const [isOpenRestaurant, setIsOpenRestaurant] = useState(false);
     const [isOpenCourier, setIsOpenCourier] = useState(false);
-    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false); // New state for checkbox
+    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+    const [isCourierSignedUp, setIsCourierSignedUp] = useState(false);
 
     const [restaurantForm, setRestaurantForm] = useState({
         name: '',
@@ -28,7 +29,7 @@ export default function DashboardPage() {
         setIsRestaurantFormValid(isFormValid);
     }, [restaurantForm]);
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
         const { name, value } = e.target;
         setRestaurantForm(prevForm => ({
             ...prevForm,
@@ -40,8 +41,8 @@ export default function DashboardPage() {
         setIsCheckboxChecked(!isCheckboxChecked);
     };
 
-    const handleRestaurantDialogChange = (isOpen) => setIsOpenRestaurant(isOpen);
-    const handleCourierDialogChange = (isOpen) => setIsOpenCourier(isOpen);
+    const handleRestaurantDialogChange = (isOpen: boolean | ((prevState: boolean) => boolean)) => setIsOpenRestaurant(isOpen);
+    const handleCourierDialogChange = (isOpen: boolean | ((prevState: boolean) => boolean)) => setIsOpenCourier(isOpen);
 
     const transitionRestaurant = useTransition(isOpenRestaurant, {
         from: { scale: 0.9, opacity: 0 },
@@ -54,6 +55,13 @@ export default function DashboardPage() {
         enter: { scale: 1, opacity: 1 },
         leave: { scale: 0.9, opacity: 0 },
     });
+
+    const handleCourierSignUp = () => {
+        if (isCheckboxChecked) {
+            setIsCourierSignedUp(true);
+            setIsOpenCourier(false);
+        }
+    };
 
     return (
         <main>
@@ -79,7 +87,14 @@ export default function DashboardPage() {
                                 </div>
                             </div>
                             <div className="user-actions">
-                                <button className="btn-primary" onClick={() => setIsOpenCourier(true)}>Přihlásit se jako kurýr</button>
+                            <CourierButton
+    onClick={() => setIsOpenCourier(true)}
+    disabled={isCourierSignedUp}
+    isCourierSignedUp={isCourierSignedUp}
+    disabledColor="#ccc" // Nová props pro barvu zakázaného tlačítka
+>
+    {isCourierSignedUp ? "Už jste řidič" : "Přihlásit se jako kurýr"}
+</CourierButton>
                                 <button className="btn-primary" onClick={() => setIsOpenRestaurant(true)}>Zažádat o přidání restaurace</button>
                                 <button className="btn-logout" onClick={() => signOut()}>Odhlásit se</button>
                             </div>
@@ -201,7 +216,12 @@ You are responsible for maintaining the confidentiality of your account and pass
                                     <form>
                                         <CheckboxInput type="checkbox" id="agree" onChange={handleCheckboxChange} />
                                         <CheckboxLabel htmlFor="agree">Souhlasím s podmínkami*</CheckboxLabel><br></br>
-                                        <SubmitButton onClick={() => setIsOpenCourier(false)} disabled={!isCheckboxChecked}>Přihlásit se</SubmitButton>
+                                        <SubmitButton 
+                                            onClick={handleCourierSignUp} 
+                                            disabled={!isCheckboxChecked}
+                                        >
+                                            Přihlásit se
+                                        </SubmitButton>
                                     </form>
                                 </Content>
                             </DialogContainer>
@@ -311,5 +331,21 @@ const SubmitButton = styled('button', {
     '&:disabled': {
         backgroundColor: '#ccc',
         cursor: 'not-allowed',
+    },
+});
+
+const CourierButton = styled('button', {
+    padding: '0.75rem',
+    fontSize: '1rem',
+    fontFamily: 'Montserrat, sans-serif',
+    borderRadius: '12px',
+    border: 'none',
+    marginTop: '2rem',
+    alignItems: 'center',
+    backgroundColor: props => props.isCourierSignedUp ? props.disabledColor : '#ccc',
+    color: '#fff',
+    cursor: props => props.isCourierSignedUp ? 'not-allowed' : 'pointer',
+    '&:hover': {
+        backgroundColor: props => props.isCourierSignedUp ? props.disabledColor : '#ccc',
     },
 });
