@@ -6,6 +6,8 @@ import { FaUser } from "react-icons/fa";
 import { FaBasketShopping } from "react-icons/fa6";
 import "./navbar.css";
 import { signOut } from "next-auth/react";
+import Search from "@/components/nav/menu-search"
+
 
 export default function DashboardNav(order:any){
     const [basketDropdownOpen, setBasketDropdownOpen] = useState(false);
@@ -49,6 +51,7 @@ export default function DashboardNav(order:any){
         <header>
             <nav>
                 <Link href="/" className="logo">GastroGO</Link>
+                <Search></Search>
                 <div className="user-menu">
                     <div ref={basketRef}>
                         <button className="basket-button" onClick={toggleBasketDropdown}>
@@ -82,7 +85,7 @@ export default function DashboardNav(order:any){
                             <div className="dropdown-menu">
                                 <Link href="/dashboard">👤 Účet</Link>
                                 <Link href="/driver">📝 Kariéra</Link>
-                                <Link href="/restaurants">🍕 Přidat restauraci</Link>
+                                <Link href="/dashboard">🍕 Přidat restauraci</Link>
                                 <Link href="" onClick={() => signOut()}>👋🏼 Odhlásit se</Link>
                             </div>
                         )}
