@@ -194,3 +194,40 @@
     color: #333;
     text-align: center;
 }
+
+.feedback-section {
+    text-align: center;
+    margin-top: 20px;
+    margin-right: 90px;
+}
+
+.emojis {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.emoji {
+    font-size: 5em;
+    cursor: pointer;
+}
+
+.emoji.selected {
+    border: 2px solid #44ce1b;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.submit-button {
+    background: #44ce1b;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background: #36a10f;
+}
