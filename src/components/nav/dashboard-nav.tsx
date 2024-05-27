@@ -5,13 +5,14 @@ import Link from "next/link";
 import { FaUser } from "react-icons/fa";
 import { FaBasketShopping } from "react-icons/fa6";
 import "./navbar.css";
-import { signOut } from "next-auth/react";
 import Search from "@/components/nav/menu-search"
+import { useSession, signOut } from "next-auth/react";
 
 
 export default function DashboardNav(order:any){
     const [basketDropdownOpen, setBasketDropdownOpen] = useState(false);
     const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+    const { data: session } = useSession();
 
     const basketRef = useRef<HTMLDivElement>(null);
     const userRef = useRef<HTMLDivElement>(null);
@@ -86,6 +87,7 @@ export default function DashboardNav(order:any){
                                 <Link href="/dashboard">👤 Účet</Link>
                                 <Link href="/driver">📝 Kariéra</Link>
                                 <Link href="/dashboard">🍕 Přidat restauraci</Link>
+                                {session?.user?.role === "Admin" && <Link href="/admin">🔧 Admin panel</Link>}
                                 <Link href="" onClick={() => signOut()}>👋🏼 Odhlásit se</Link>
                             </div>
                         )}
