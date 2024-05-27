@@ -121,7 +121,10 @@
     font-size: 20px;
     color: #333;
     font-weight: normal;
-    margin-left: 15px;
+}
+
+.food-card h3 {
+    color: #60D140;
 }
 
 .food-card p {

@@ -15,8 +15,11 @@ export default async function Nav(){
     let orders = null
     let order = null
     if(session?.user?.id){
+        
         orders = await getOrders(session?.user?.id)
-        order = orders[0].orderItems
+        if(orders && orders.length > 0){
+            order = orders[0].orderItems 
+        }
     }
 
     return (
