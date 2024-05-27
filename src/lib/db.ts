@@ -187,3 +187,10 @@ export async function createRequestRestaurant(restaurantId: string, restaurantNa
         throw error;
     }
 }
+
+export async function getAllRequests() {
+    const requests = await prisma.requests.findMany()
+    
+    return requests;
+}
+

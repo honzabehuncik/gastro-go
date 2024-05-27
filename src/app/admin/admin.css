@@ -107,13 +107,13 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.request-table .status-preparing {
+.request-table .status-restaurant {
     background-color: #ff9800;
     border-color: #ff9800;
     color: #ffffff;
 }
 
-.request-table .status-delivering {
+.request-table .status-driver {
     background-color: #2196F3;
     color: #ffffff;
 }

@@ -7,7 +7,6 @@ import { auth } from '@/auth';
 import { parseISO, addMinutes, format } from 'date-fns';
 
 
-
 export default async function DriverPage() {
     const session = await auth();
     const heading = !session ? "Neoprávněný přístup!" : "Administrace - rozvoz";

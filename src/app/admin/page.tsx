@@ -1,13 +1,14 @@
-"use client"
-
 import { signIn, useSession } from "next-auth/react";
 import React from "react";
 import "./admin.css";
-import { parseISO, addMinutes, format } from 'date-fns';
+import { getAllRequests } from "@/lib/db";
+import { auth } from '@/auth';
 
-export default function AdminPage() {
-    const { data: session } = useSession();
-    const heading = !session || session.user?.role !== "Admin" ? "Neoprávněný přístup!" : "Admin panel";
+export default async function AdminPage() {
+    const session = await auth();
+    const heading = !session ? "Neoprávněný přístup!" : "Admin panel";
+
+    let request = await getAllRequests();
 
     return (
         <main>
@@ -23,22 +24,24 @@ export default function AdminPage() {
                         <>
                             <h1>Žádosti</h1>
                             <p>
-                                Níže nalezne aktuální statistiky GastroGO.
+                                Níže nalezne aktuální žádosti o přidání nové restaurace nebo o získání statusu kurýra.
                             </p>
                             <div className="request-table">
+                                {request.map((req: any) => (
                                     <div className="request-row">
-                                        <div className={`request-status status-recorded`}>
-                                        🚴 Kurýr
-                                        </div>
-                                        <div className="request-id">#001</div>
-                                        <div className="request-details">Marek</div>
-                                        <div className="request-details">Telefon</div>
-                                        <div className="request-details">CV</div>
-                                        <div className="request-btns">
-                                        <button className="assign-button">Potvrdit</button>
-                                        <button className="remove-button">Zamítnout</button>
-                                        </div>
+                                    <div className={`request-status status-${req.category ? 'restaurant' : 'driver'}`}>
+                                    {req.category ? '🍝Restaurace' : '🚴 Kurýr'}
                                     </div>
+                                    <div className="request-id">#{req.id}</div>
+                                    <div className="request-details">{req.userName ? req.userName : req.restaurantName}</div>
+                                    <div className="request-details">{req.restaurantNumber}</div>
+                                    <div className="request-details">CV</div>
+                                    <div className="request-btns">
+                                    <button className="assign-button">Potvrdit</button>
+                                    <button className="remove-button">Zamítnout</button>
+                                    </div>
+                                </div>
+                                ))}
                             </div>
                         </>
                     ) : (
