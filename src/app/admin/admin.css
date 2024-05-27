@@ -1,0 +1,185 @@
+.admin-container {
+    font-family: 'Montserrat', sans-serif;
+    padding-left: 5%;
+    padding-right: 4%;
+}
+
+.admin-container h1 {
+    font-size: 30px;
+    color: #333;
+}
+
+.admin-container p {
+    color: #333;
+    font-size: 20px;
+}
+
+.admin-container button {
+    background-color: #60D140;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.admin-container button:not(:first-of-type) {
+    margin-left: 3%;
+}
+
+.admin-container button:hover {
+    background-color: #4caf50;
+}
+
+.hero-section {
+    background-image: url('https://www.computersciencedegreehub.com/wp-content/uploads/2020/06/What-is-a-Systems-Administrator-1024x576.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 3%;
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(96, 209, 64, 0.6), rgba(255, 255, 255, 1));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    padding-left: 5%;
+}
+
+.hero-content h1 {
+    color: white;
+    font-size: 45px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.request-table {
+    width: 100%;
+    margin-top: 2%;
+    border-spacing: 0;
+}
+
+.request-table .request-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #EFEFEF;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.request-table .request-row:hover {
+    background-color: #ddd;
+}
+
+.request-table .request-id {
+    font-weight: bold;
+    color: #60D140;
+    font-size: 18px;
+}
+
+.request-table .request-details {
+    color: #010101;
+    font-size: 18px;
+}
+
+.request-table .request-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 22px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.request-table .status-preparing {
+    background-color: #ff9800;
+    border-color: #ff9800;
+    color: #ffffff;
+}
+
+.request-table .status-delivering {
+    background-color: #2196F3;
+    color: #ffffff;
+}
+
+.request-table .status-delivered {
+    background-color: #4CAF50;
+    color: #ffffff;
+}
+
+.request-table .status-recorded {
+    background-color: #9E9E9E;
+    color: #ffffff;
+}
+
+.request-table .request-actions {
+    display: flex;
+    flex-direction: column;
+}
+
+.request-btns {
+    display: flex;
+    align-items: center;
+}
+
+.request-table .assign-button {
+    background-color: #60D140;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.request-table .assign-button:hover {
+    background-color: #4CAF50;
+}
+
+.request-table .edit-button {
+    background-color: #d1a340;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.request-table .edit-button:hover {
+    background-color: #af814c;
+}
+
+.request-table .remove-button {
+    background-color: #d14040;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.request-table .remove-button:hover {
+    background-color: #af4c4c;
+}
