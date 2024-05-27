@@ -159,4 +159,5 @@ model Requests {
   restaurantNumber    Int?
   restaurantOpenTime  DateTime?
   restaurantCloseTime DateTime?
+  category            Boolean?
 }
