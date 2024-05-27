@@ -109,7 +109,7 @@ export async function addToCartDB(id: string, userId: string) {
 
             return itemOrder;
         } else {
-            console.log("Restaurant ID is missing");
+            console.log("success");
         }
     } else {
         const customerOrder = user?.orders[0];
@@ -152,4 +152,38 @@ export async function getOrders(id: string) {
         }
     });
     return orders;
+}
+
+export async function createRequestUser(userId: string, userName: string) {
+    try {
+        const newRequest = await prisma.requests.create({
+            data: {
+                userId: userId,
+                userName: userName
+            },
+        });
+        return newRequest;
+    } catch (error) {
+        console.error('Error creating request:', error);
+        throw error;
+    }
+}
+
+export async function createRequestRestaurant(restaurantId: string, restaurantName: string, restaurantEmail: string, restaurantNumber: number, restaurantOpenTime: Date, restaurantCloseTime: Date) {
+    try {
+        const newRequest = await prisma.requests.create({
+            data: {
+                restaurantId: restaurantId,
+                restaurantName: restaurantName,
+                restaurantEmail: restaurantEmail,
+                restaurantNumber: restaurantNumber,
+                restaurantOpenTime: restaurantOpenTime,
+                restaurantCloseTime: restaurantCloseTime
+            },
+        });
+        return newRequest;
+    } catch (error) {
+        console.error('Error creating request:', error);
+        throw error;
+    }
 }
