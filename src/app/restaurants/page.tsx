@@ -1,47 +1,15 @@
-"use client"
-
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import React from "react";
 import "./restaurants.css";
+import { getCustomerOrder } from "@/lib/db";
+import { auth } from '@/auth';
+import { format, addMinutes } from 'date-fns';
 
-const orders = [
-    {
-        id: "001",
-        name: "Objednávka 1",
-        driver: "Marek",
-        driverArrive: "19:35",
-        status: "⌛ Připravuje se",
-        statusClass: "preparing",
-    },
-    {
-        id: "002",
-        name: "Objednávka 2",
-        driver: "Marek",
-        driverArrive: "20:00",
-        status: "⌛ Připravuje se",
-        statusClass: "preparing",
-    },
-    {
-        id: "003",
-        name: "Objednávka 3",
-        driver: "Marek",
-        driverArrive: "20:30",
-        status: "⌛ Připravuje se",
-        statusClass: "preparing",
-    },
-    {
-        id: "004",
-        name: "Objednávka 4",
-        driver: "Marek",
-        driverArrive: "21:00",
-        status: "⌛ Připravuje se",
-        statusClass: "preparing",
-    },
-];
+export default async function DriverPage() {
+    const session = await auth();
+    const heading = !session ? "Neoprávněný přístup!" : "Administrace - restaurace";
+    let customerOrder = await getCustomerOrder();
 
-export default function DriverPage() {
-    const { data: session } = useSession();
-    const heading = !session ? "Neoprávněný přístup!" : "Restaurace panel";
     return (
         <main>
             <div className="driver">
@@ -56,20 +24,27 @@ export default function DriverPage() {
                         <>
                             <h1>Nové objednávky</h1>
                             <p>
-                                Níže nalezne nové objednávky, které je potřeba připravit.
-                                <br></br>Každá objednávka má přiřazeného kurýra, který ji vyzvedne v očekávaný čas.
-                                </p>
+                                Níže naleznete nové objednávky, které je potřeba připravit.
+                                <br/>Každá objednávka má přiřazeného kurýra, který ji vyzvedne v očekávaný čas.
+                            </p>
                             <div className="order-table">
-                                {orders.map((order) => (
+                                {customerOrder.map((order: any) => (
                                     <div key={order.id} className="order-row">
-                                        <div className={`order-status status-${order.statusClass}`}>
-                                            {order.status}
+                                        <div className={`order-status status-recorded`}>
+                                            {order.status.statusName}
                                         </div>
                                         <div className="order-id">ID: #{order.id}</div>
                                         <div className="order-details">
-                                            <strong>Název: </strong>{order.name}<br/>
-                                            <strong>Přiřazený kurýr: </strong>{order.driver}<br/>
-                                            <strong>Očekávaný čas příjezdu: </strong>{order.driverArrive}
+                                            <strong>Položky:</strong>
+                                            {order.orderItems.map((item: any, index: number) => (
+                                                <div key={index}>
+                                                    <strong><span className="order-quantity">{item.quantity}x</span></strong> {item.menu.name}<br/>
+                                                </div>
+                                            ))}
+                                            <strong>Kurýr:</strong> {order.driver ? `${order.driver.user.name} (${order.driver.vehicleInfo})` : "Nepřiřazen"}<br />
+                                            <strong>Adresa:</strong> {order.restaurant.address} {order.deliveryAddress}<br/>
+                                            <strong>Čas objednání:</strong> {format(new Date(order.orderDate), "dd.MM.yyyy HH:mm")}<br/>
+                                            <strong>Čas doručení:</strong> {format(addMinutes(new Date(order.orderDate), 40), "dd.MM.yyyy HH:mm")}
                                         </div>
                                         <button className="assign-button">Dokončit objednávku</button>
                                     </div>

@@ -99,6 +99,10 @@
     margin-top: 5px;
 }
 
+.order-table .order-details .order-quantity {
+    color: #60D140;
+}
+
 .order-table .order-status {
     display: inline-block;
     padding: 4px 12px;

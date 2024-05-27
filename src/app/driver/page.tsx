@@ -13,8 +13,6 @@ export default async function DriverPage() {
     const heading = !session ? "Neoprávněný přístup!" : "Administrace - rozvoz";
 
     let customerOrder = await getCustomerOrder();
-    console.log(customerOrder)
-
     return (
         <main>
             <div className="driver">
@@ -36,7 +34,7 @@ export default async function DriverPage() {
                                 {customerOrder.map((order: any) => (
                                     <div key={order.id} className="order-row">
                                         <div className={`order-status status-recorded`}>
-                                            {order.status}
+                                            {order.status.statusName}
                                         </div>
                                         <div className="order-id">ID: #{order.id}</div>
                                         <div className="order-details">
@@ -46,7 +44,7 @@ export default async function DriverPage() {
                                             <strong>Čas objednání: </strong>{format(new Date(order.orderDate), "dd.MM.yyyy HH:mm")}<br/>
                                             <strong>Čas doručení: </strong>{format(addMinutes(new Date(order.orderDate), 40), "dd.MM.yyyy HH:mm")}
                                         </div>
-                                        <button className="assign-button">Přiřadit objednávku</button>
+                                        <button className="assign-button">Potvrdit objednávku</button>
                                         <button className="edit-button">Spravovat</button>
                                         <button className="remove-button">Odstranit</button>
                                     </div>

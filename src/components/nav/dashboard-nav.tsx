@@ -82,7 +82,7 @@ export default function DashboardNav(order:any){
                             <div className="dropdown-menu">
                                 <Link href="/dashboard">👤 Účet</Link>
                                 <Link href="/driver">📝 Kariéra</Link>
-                                <Link href="/dashboard">🍕 Přidat restauraci</Link>
+                                <Link href="/restaurants">🍕 Přidat restauraci</Link>
                                 <Link href="" onClick={() => signOut()}>👋🏼 Odhlásit se</Link>
                             </div>
                         )}
