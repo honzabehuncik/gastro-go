@@ -40,6 +40,44 @@ export async function getCustomerOrder() {
     return customerOrder;
 }
 
+export async function getCustomerOrderRestaurant() {
+    const customerOrder = await prisma.customerOrder.findMany({
+        where: {
+            statusId: 'clwj4ynrt00025cjp41o2zuge'
+        },
+        include: {
+            restaurant: true,
+            orderItems: {
+                include: {
+                    menu: true
+                }
+            },
+            driver: true,
+            status: true,
+        }
+    });
+    return customerOrder;
+}
+
+export async function getCustomerOrderDriver() {
+    const customerOrder = await prisma.customerOrder.findMany({
+        where: {
+            statusId: 'clwq0pv890000siwaxfcxp85g'
+        },
+        include: {
+            restaurant: true,
+            orderItems: {
+                include: {
+                    menu: true
+                }
+            },
+            driver: true,
+            status: true,
+        }
+    });
+    return customerOrder;
+}
+
 export async function getRestaurant(shortName: string) {
     const restaurant = await prisma.restaurant.findMany({
         where: {
