@@ -10,7 +10,7 @@ const prisma = createPrismaClient();
 export async function GET(request:Request){
     const session = await auth()
     const headersList = headers()
-    const key = headersList.get('API_KEY')
+    const key = headersList.get('API-KEY')
     
     
     if((!session?.user && session?.user.role !== "Admin") || key != process.env.DATA_API_KEY){
@@ -20,18 +20,10 @@ export async function GET(request:Request){
             }, {status: 401}
         );
     }
-    const orders = await prisma.customerOrder.findMany({
-        include: {
-            orderItems: {
-                include: {
-                    menu: true
-                }
-            },
-            user: true,
-            restaurant: true
-        }
+
+    const user = await prisma.user.findMany({
     })
-    return NextResponse.json(orders)
+
 }
 
 export async function POST(request:Request){
@@ -39,7 +31,7 @@ export async function POST(request:Request){
     const session = await auth()
     
     const headersList = headers()
-    const key = headersList.get('API_KEY')
+    const key = headersList.get('API-KEY')
     
     
     if((!session?.user && session?.user.role !== "Admin") || key != process.env.DATA_API_KEY){
@@ -49,13 +41,20 @@ export async function POST(request:Request){
             }, {status: 401}
         );
     }
-    if(!data.userId || !data.itemId){
+    if(!data.userId && !data.role){
         return NextResponse.json(
             {
-                error: "userId nebo itemId nevyplněno"
+                error: "userId/role nevyplněno"
             }, {status: 400}
         );
     }
-    const order = addToCartDB(data.itemId, data.userId)
-    return NextResponse.json(order)
+    const user = await prisma.user.update({
+        where:{
+            id: data.userId as string
+        },
+        data:{
+            role: data.role
+        }
+    })
+    return NextResponse.json(user)
 }

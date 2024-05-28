@@ -1,14 +1,28 @@
 import { signIn } from "next-auth/react";
 import React from "react";
 import "./restaurants.css";
-import { getCustomerOrderRestaurant } from "@/lib/db";
+import { getCustomerOrderRestaurant, updateStatus } from "@/lib/db";
 import { auth } from '@/auth';
 import { format, addMinutes } from 'date-fns';
+import { revalidatePath } from "next/cache";
 
 export default async function DriverPage() {
     const session = await auth();
     const heading = !session ? "Neoprávněný přístup!" : "Administrace - restaurace";
     let customerOrder = await getCustomerOrderRestaurant();
+
+    async function completeOrder(formData: FormData){
+        "use server"
+
+        const id = formData.get("id") as string
+        const statusId = "clwj4ynrv00035cjptyk5a0dt"
+
+        const order = await updateStatus(id, statusId)
+
+        revalidatePath("/restaurants")
+
+        return order
+    }
 
     return (
         <main>
@@ -46,7 +60,10 @@ export default async function DriverPage() {
                                             <strong>Čas objednání:</strong> {format(new Date(order.orderDate), "dd.MM.yyyy HH:mm")}<br/>
                                             <strong>Čas doručení:</strong> {format(addMinutes(new Date(order.orderDate), 40), "dd.MM.yyyy HH:mm")}
                                         </div>
-                                        <button className="assign-button">Dokončit objednávku</button>
+                                        <form action={completeOrder}>
+                                            <input type="hidden" name="id" value={order.id}></input>
+                                            <button className="assign-button">Dokončit objednávku</button>
+                                        </form>
                                     </div>
                                 ))}
                             </div>

@@ -4,6 +4,8 @@ import "./admin.css";
 import { getAllRequests } from "@/lib/db";
 import { auth } from '@/auth';
 import { createPrismaClient } from "@/lib/prisma";
+import { DiscardButton, SubmitButton } from "@/components/admin/btn";
+import { revalidatePath } from "next/cache";
 const prisma = createPrismaClient();
 
 export default async function AdminPage() {
@@ -15,12 +17,27 @@ export default async function AdminPage() {
     async function acceptBtn(formData: FormData){
         "use server"
         const id = formData.get("id")
-        const request = await prisma.requests
+        if(id){
+            const request = await prisma.requests.update({
+                where: {
+                    id: id as string
+                },
+                data:{
+                    
+                }
+            })
+        }
     }
 
     async function discardBtn(formData: FormData){
         "use server"
         const id = formData.get("id")
+        const request = await prisma.requests.delete({
+            where:{
+                id: id as string
+            }
+        })
+        revalidatePath("/admin")
     }
 
     return (
@@ -52,11 +69,13 @@ export default async function AdminPage() {
                                     <div className="request-btns">
                                     <form action={acceptBtn}>
                                         <input name="id" type="hidden" value={req.id}></input>
-                                        <button type="submit" className="assign-button">Potvrdit</button> 
+                                        <input name="category" type="hidden" value={req.category}></input>
+                                        <SubmitButton />
                                     </form>
                                     <form action={discardBtn}>
                                         <input name="id" type="hidden" value={req.id}></input>
-                                        <button className="remove-button">Zamítnout</button>
+                                        <input name="category" type="hidden" value={req.category}></input>
+                                        <DiscardButton />
                                     </form>
                                     </div>
                                 </div>
