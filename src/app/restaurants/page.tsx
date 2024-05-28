@@ -1,14 +1,14 @@
 import { signIn } from "next-auth/react";
 import React from "react";
 import "./restaurants.css";
-import { getCustomerOrder } from "@/lib/db";
+import { getCustomerOrderRestaurant } from "@/lib/db";
 import { auth } from '@/auth';
 import { format, addMinutes } from 'date-fns';
 
 export default async function DriverPage() {
     const session = await auth();
     const heading = !session ? "Neoprávněný přístup!" : "Administrace - restaurace";
-    let customerOrder = await getCustomerOrder();
+    let customerOrder = await getCustomerOrderRestaurant();
 
     return (
         <main>
