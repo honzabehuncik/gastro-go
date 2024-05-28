@@ -2,39 +2,45 @@ import { createPrismaClient } from "@/lib/prisma";
 
 const prisma = createPrismaClient();
 
-export async function getRestaurants(){
+export async function getRestaurants() {
     const restaurants = await prisma.restaurant.findMany({
         include: {
             badges: true
         }
-    })
-    return restaurants
+    });
+    return restaurants;
 }
 
-export async function getUser(id: string){
+export async function getUser(id: string) {
     const user = await prisma.user.findUnique({
-        where:{
+        where: {
             id: id
         },
-        include:{
+        include: {
             orders: true
         }
-    })
+    });
 
-    return user
+    return user;
 }
 
 export async function getCustomerOrder() {
     const customerOrder = await prisma.customerOrder.findMany({
-        include:{
+        include: {
             restaurant: true,
-            orderItems: true
+            orderItems: {
+                include: {
+                    menu: true
+                }
+            },
+            driver: true,
+            status: true,
         }
-    })
-    return customerOrder
+    });
+    return customerOrder;
 }
 
-export async function getRestaurant(shortName: string){
+export async function getRestaurant(shortName: string) {
     const restaurant = await prisma.restaurant.findMany({
         where: {
             shortName: shortName
@@ -47,33 +53,33 @@ export async function getRestaurant(shortName: string){
                 }
             }
         }
-    })
+    });
 
-    return restaurant.length > 0 ? restaurant[0] : null
+    return restaurant.length > 0 ? restaurant[0] : null;
 }
 
-export async function getItem(id: string){
-    const item = prisma.menu.findUnique({
-        where:{
+export async function getItem(id: string) {
+    const item = await prisma.menu.findUnique({
+        where: {
             id: id
         },
         include: {
-            category:{
-                include:{
+            category: {
+                include: {
                     restaurant: true
                 }
             }
         }
-    })
+    });
 
-    return item
+    return item;
 }
 
-export async function addToCartDB(id: string, userId: string){
-    const menu = await getItem(id)
-    const user = await getUser(userId)
+export async function addToCartDB(id: string, userId: string) {
+    const menu = await getItem(id);
+    const user = await getUser(userId);
 
-    if(user?.orders && user.orders.length <= 0){
+    if (user?.orders && user.orders.length <= 0) {
         if (menu?.category?.restaurant?.id) {
             const customerOrder = await prisma.customerOrder.create({
                 data: {
@@ -125,18 +131,17 @@ export async function addToCartDB(id: string, userId: string){
                 return newItemOrder;
             }
 
-            return itemOrder
+            return itemOrder;
         } else {
-            console.log("success")
+            console.log("success");
         }
-    } else{
-        const customerOrder = user?.orders[0]
-        const customerOrderId = customerOrder?.id
-        console.log(menu?.category?.restaurant?.id)
+    } else {
+        const customerOrder = user?.orders[0];
+        const customerOrderId = customerOrder?.id;
+        console.log(menu?.category?.restaurant?.id);
 
         if (menu?.category?.restaurant?.id && customerOrderId) {
-
-            const itemOrder = prisma.orderItem.create({
+            const itemOrder = await prisma.orderItem.create({
                 data: {
                     orderId: customerOrderId,
                     menuId: menu.id,
@@ -147,17 +152,16 @@ export async function addToCartDB(id: string, userId: string){
                     order: true,
                     menu: true
                 }
-            })
-            return itemOrder
+            });
+            return itemOrder;
         }
-        
     }
 }
 
-export async function getOrders(id: string){
-    const user = await getUser(id)
-    const order = user?.orders[0]
-    const orderId = order?.id
+export async function getOrders(id: string) {
+    const user = await getUser(id);
+    const order = user?.orders[0];
+    const orderId = order?.id;
 
     const orders = await prisma.customerOrder.findMany({
         where: {
@@ -165,16 +169,58 @@ export async function getOrders(id: string){
         },
         include: {
             orderItems: {
-                include:{
+                include: {
                     menu: true
                 }
             },
             restaurant: true,
             user: true
         }
-    })
-    return orders
+    });
+    return orders;
 }
+
+export async function createRequestUser(userId: string, userName: string) {
+    try {
+        const newRequest = await prisma.requests.create({
+            data: {
+                userId: userId,
+                userName: userName
+            },
+        });
+        return newRequest;
+    } catch (error) {
+        console.error('Error creating request:', error);
+        throw error;
+    }
+}
+
+export async function createRequestRestaurant(restaurantId: string, restaurantName: string, restaurantEmail: string, restaurantNumber: number, restaurantOpenTime: Date, restaurantCloseTime: Date) {
+    try {
+        const newRequest = await prisma.requests.create({
+            data: {
+                restaurantId: restaurantId,
+                restaurantName: restaurantName,
+                restaurantEmail: restaurantEmail,
+                restaurantNumber: restaurantNumber,
+                restaurantOpenTime: restaurantOpenTime,
+                restaurantCloseTime: restaurantCloseTime
+            },
+        });
+        return newRequest;
+    } catch (error) {
+        console.error('Error creating request:', error);
+        throw error;
+    }
+}
+
+export async function getAllRequests() {
+    const requests = await prisma.requests.findMany()
+    
+    return requests;
+}
+
+
 
 export async function getItemsToCart(userId: string){
     let orders = await getOrders(userId)

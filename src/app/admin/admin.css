@@ -1,22 +1,21 @@
-.driver-container {
+.admin-container {
     font-family: 'Montserrat', sans-serif;
     padding-left: 5%;
     padding-right: 4%;
 }
 
-.driver-container h1 {
+.admin-container h1 {
     font-size: 30px;
     color: #333;
 }
 
-.driver-container p {
+.admin-container p {
     color: #333;
     font-size: 20px;
 }
 
-.driver-container button {
+.admin-container button {
     background-color: #60D140;
-    margin-top: 1%;
     color: white;
     border: none;
     border-radius: 12px;
@@ -26,16 +25,16 @@
     transition: background-color 0.3s ease;
 }
 
-.driver-container button:not(:first-of-type) {
-    margin-left: 1%;
+.admin-container button:not(:first-of-type) {
+    margin-left: 3%;
 }
 
-.driver-container button:hover {
+.admin-container button:hover {
     background-color: #4caf50;
 }
 
 .hero-section {
-    background-image: url('https://i.pinimg.com/originals/3d/a3/7d/3da37dc6421f978a50e165466f221d72.jpg');
+    background-image: url('https://www.computersciencedegreehub.com/wp-content/uploads/2020/06/What-is-a-Systems-Administrator-1024x576.jpg');
     background-size: cover;
     background-position: center;
     height: 200px;
@@ -66,15 +65,16 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-
-.order-table {
+.request-table {
     width: 100%;
     margin-top: 2%;
     border-spacing: 0;
 }
 
-.order-table .order-row {
-    display: block;
+.request-table .request-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #EFEFEF;
     border-radius: 12px;
     padding: 20px;
@@ -83,58 +83,62 @@
     transition: background-color 0.3s ease;
 }
 
-.order-table .order-row:hover {
+.request-table .request-row:hover {
     background-color: #ddd;
 }
 
-.order-table .order-id {
+.request-table .request-id {
     font-weight: bold;
     color: #60D140;
     font-size: 18px;
 }
 
-.order-table .order-details {
+.request-table .request-details {
     color: #010101;
-    font-size: 16px;
-    margin-top: 5px;
+    font-size: 18px;
 }
 
-.order-table .order-details .order-quantity {
-    color: #60D140;
-}
-
-.order-table .order-status {
+.request-table .request-status {
     display: inline-block;
     padding: 4px 12px;
     border-radius: 22px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
-    margin-bottom: 10px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.order-table .status-preparing {
+.request-table .status-restaurant {
     background-color: #ff9800;
     border-color: #ff9800;
     color: #ffffff;
 }
 
-.order-table .status-delivering {
+.request-table .status-driver {
     background-color: #2196F3;
     color: #ffffff;
 }
 
-.order-table .status-delivered {
+.request-table .status-delivered {
     background-color: #4CAF50;
     color: #ffffff;
 }
 
-.order-table .status-recorded {
+.request-table .status-recorded {
     background-color: #9E9E9E;
     color: #ffffff;
 }
 
-.order-table .assign-button {
+.request-table .request-actions {
+    display: flex;
+    flex-direction: column;
+}
+
+.request-btns {
+    display: flex;
+    align-items: center;
+}
+
+.request-table .assign-button {
     background-color: #60D140;
     color: white;
     border: none;
@@ -143,14 +147,13 @@
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
-    margin-top: 10px;
 }
 
-.order-table .assign-button:hover {
+.request-table .assign-button:hover {
     background-color: #4CAF50;
 }
 
-.order-table .edit-button {
+.request-table .edit-button {
     background-color: #d1a340;
     color: white;
     border: none;
@@ -162,11 +165,11 @@
     margin-top: 10px;
 }
 
-.order-table .edit-button:hover {
+.request-table .edit-button:hover {
     background-color: #af814c;
 }
 
-.order-table .remove-button {
+.request-table .remove-button {
     background-color: #d14040;
     color: white;
     border: none;
@@ -175,9 +178,8 @@
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
-    margin-top: 10px;
 }
 
-.order-table .remove-button:hover {
+.request-table .remove-button:hover {
     background-color: #af4c4c;
 }

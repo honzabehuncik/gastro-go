@@ -3,13 +3,14 @@
 import { signIn, useSession } from "next-auth/react";
 import React, { useState, useEffect } from "react";
 import "./status.css";
-import { CountdownCircleTimer } from 'react-countdown-circle-timer'
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { FaInfoCircle } from 'react-icons/fa';
 import { TbCircleNumber1Filled, TbCircleNumber2Filled, TbCircleNumber3Filled } from "react-icons/tb";
 
+const totalMinutes = 1; // time remaining in minutes
+
 const minuteSeconds = 60;
-const hourSeconds = 3600;
-const remainingTime = 1800;
+const remainingTime = totalMinutes * minuteSeconds;
 
 const timerProps = {
   isPlaying: true,
@@ -17,7 +18,17 @@ const timerProps = {
   strokeWidth: 13
 };
 
-const renderTime = (dimension: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | Promise<React.AwaitedReactNode> | null | undefined, time: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | Promise<React.AwaitedReactNode> | null | undefined) => {
+const renderTime = (dimension, time) => {
+    if (time === 0) {
+        return (
+          <div className="time-wrapper">
+            <div className="time-finished">👍</div>
+            <div className="time-description">
+              Objednávka právě<br></br>dorazila k vám!
+            </div>
+          </div>
+        );
+    }
     return (
       <div className="time-wrapper">
         <div className="time">{time}</div>
@@ -29,12 +40,35 @@ const renderTime = (dimension: string | number | bigint | boolean | React.ReactE
         </div>
       </div>
     );
-  };
+};
 
-const getTimeMinutes = (time: number) => ((time % remainingTime) / minuteSeconds) | 0;
+const getTimeMinutes = (time) => Math.ceil((time % remainingTime) / minuteSeconds);
 
 export default function DashboardPage() {
     const { data: session } = useSession();
+    const [showFeedback, setShowFeedback] = useState(false);
+    const [selectedEmoji, setSelectedEmoji] = useState(null);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowFeedback(true);
+        }, remainingTime * 1000); // Show feedback after countdown ends
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    const handleEmojiClick = (emoji) => {
+        setSelectedEmoji(emoji);
+    };
+
+    const handleSubmitReview = () => {
+        if (selectedEmoji) {
+            console.log(`User selected: ${selectedEmoji}`);
+            // You can add your form submission logic here
+        } else {
+            alert("Vyberte prosím smajlík.");
+        }
+    };
 
     return (
         <main>
@@ -58,16 +92,16 @@ export default function DashboardPage() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="order-step secondary">
+                                <div className="order-step inactive">
                                     <div className="order-content">
                                         <TbCircleNumber2Filled className="icon" />
                                         <div>
-                                            <h3>Objednávka je na cestě!</h3>
+                                            <h2>Objednávka je na cestě!</h2>
                                             <p>Vaše objednávka je na cestě, buďte připraveni na doručení.</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="order-step secondary">
+                                <div className="order-step inactive">
                                     <div className="order-content">
                                         <TbCircleNumber3Filled className="icon" />
                                         <div>
@@ -90,7 +124,7 @@ export default function DashboardPage() {
                             <CountdownCircleTimer
                                 {...timerProps}
                                 colors={["#e51f1f", "#f2a134", "#f7e379", "#bbdb44", "#44ce1b"]}
-                                colorsTime={[1800, 1200, 600, 300, 0]}
+                                colorsTime={[remainingTime, remainingTime * 0.666, remainingTime * 0.333, remainingTime * 0.166, 0]}
                                 duration={remainingTime}
                                 rotation="counterclockwise"
                                 initialRemainingTime={remainingTime}
@@ -100,11 +134,31 @@ export default function DashboardPage() {
                             >
                                 {({ elapsedTime, color }) => (
                                     <span style={{ color }}>
-                                        {renderTime("minut", getTimeMinutes(hourSeconds - elapsedTime))}
+                                        {renderTime("minut", getTimeMinutes(remainingTime - elapsedTime))}
                                     </span>
                                 )}
                             </CountdownCircleTimer>
                             </div>
+                            {showFeedback && (
+                                <div className="feedback-section">
+                                    <h3>Ohodnoťte naši službu:</h3>
+                                    <div className="emojis">
+                                        <span 
+                                            className={`emoji ${selectedEmoji === 'sad' ? 'selected' : ''}`} 
+                                            onClick={() => handleEmojiClick('sad')}
+                                        >😢</span>
+                                        <span 
+                                            className={`emoji ${selectedEmoji === 'neutral' ? 'selected' : ''}`} 
+                                            onClick={() => handleEmojiClick('neutral')}
+                                        >😐</span>
+                                        <span 
+                                            className={`emoji ${selectedEmoji === 'happy' ? 'selected' : ''}`} 
+                                            onClick={() => handleEmojiClick('happy')}
+                                        >😊</span>
+                                    </div>
+                                    <button className="submit-button" onClick={handleSubmitReview}>Odeslat recenzi</button>
+                                </div>
+                            )}
                         </>
                     ) : (
                         <>

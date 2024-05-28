@@ -3,14 +3,16 @@
 import { FaUser } from "react-icons/fa";
 import { FaBasketShopping } from "react-icons/fa6";
 import React, { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import { signOut } from "next-auth/react";
+import Link from "next/link"
+import { useSession, signOut } from "next-auth/react";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 
 export default function BasketMenu() {
     const { cartItems } = useShoppingCart();
     const [basketDropdownOpen, setBasketDropdownOpen] = useState(false);
     const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+    const [price, setPrice] = useState()
+    const { data: session } = useSession();
 
     const basketRef = useRef<HTMLDivElement>(null);
     const userRef = useRef<HTMLDivElement>(null);
@@ -86,6 +88,7 @@ export default function BasketMenu() {
                         <Link href="/dashboard">👤 Účet</Link>
                         <Link href="/driver">📝 Kariéra</Link>
                         <Link href="/dashboard">🍕 Přidat restauraci</Link>
+                        {session?.user?.role === "Admin" && <Link href="/admin">🔧 Admin panel</Link>}
                         <Link href="" onClick={() => signOut()}>👋🏼 Odhlásit se</Link>
                     </div>
                 )}

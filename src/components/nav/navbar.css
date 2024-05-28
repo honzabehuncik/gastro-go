@@ -189,3 +189,33 @@ nav .basket-icon {
 .dropdown-menu .order-link:hover {
     background-color: #4CAF50;
 }
+
+nav .search-container {
+    display: flex;
+    align-items: center;
+    background-color: #EFEFEF;
+    border-radius: 12px;
+    padding: 5px 10px;
+    width: 400px;
+    height: 55px;
+}
+
+nav .search-icon {
+    font-size: 18px;
+    color: #000000;
+    margin-right: 10px;
+}
+
+nav .search-input {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    width: 100%;
+    color: #000000;
+}
+
+nav .search-input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}

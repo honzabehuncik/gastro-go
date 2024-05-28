@@ -148,3 +148,16 @@ model OrderItem {
   menu      Menu          @relation(fields: [menuId], references: [id])
   order     CustomerOrder @relation(fields: [orderId], references: [id])
 }
+
+model Requests {
+  id                  String    @id @default(cuid())
+  userId              String?
+  userName            String?
+  restaurantId        String?
+  restaurantName      String?
+  restaurantEmail     String?
+  restaurantNumber    Int?
+  restaurantOpenTime  DateTime?
+  restaurantCloseTime DateTime?
+  category            Boolean?
+}
