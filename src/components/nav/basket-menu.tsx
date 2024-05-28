@@ -88,7 +88,7 @@ export default function BasketMenu() {
                         {session?.user?.role === "Driver" || session?.user?.role === "Admin" && <Link href="/driver">📝 Kariéra</Link>}
                         {session?.user?.role === "Admin" && <Link href="/restaurants">🍕 Správa objednávek</Link>}
                         {session?.user?.role === "Admin" && <Link href="/admin">🔧 Admin panel</Link>}
-                        <Link href="/" onClick={() => signOut()}>👋🏼 Odhlásit se</Link>
+                        <Link href="/" onClick={() => signOut({ callbackUrl: '/' })}>👋🏼 Odhlásit se</Link>
                     </div>
                 )}
             </div>
