@@ -11,7 +11,6 @@ export default function BasketMenu() {
     const { cartItems } = useShoppingCart();
     const [basketDropdownOpen, setBasketDropdownOpen] = useState(false);
     const [userDropdownOpen, setUserDropdownOpen] = useState(false);
-    const [price, setPrice] = useState()
     const { data: session } = useSession();
 
     const basketRef = useRef<HTMLDivElement>(null);
@@ -89,7 +88,7 @@ export default function BasketMenu() {
                         <Link href="/driver">📝 Kariéra</Link>
                         <Link href="/dashboard">🍕 Přidat restauraci</Link>
                         {session?.user?.role === "Admin" && <Link href="/admin">🔧 Admin panel</Link>}
-                        <Link href="" onClick={() => signOut()}>👋🏼 Odhlásit se</Link>
+                        <Link href="/" onClick={() => signOut()}>👋🏼 Odhlásit se</Link>
                     </div>
                 )}
             </div>

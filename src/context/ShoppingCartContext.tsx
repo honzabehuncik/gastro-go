@@ -43,7 +43,13 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch('/api/orders/'+session?.user.id);
+                const response = await fetch('/api/orders/'+session?.user.id, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'API_Key': process.env.DATA_API_KEY!
+                    }
+                });
                 if (!response.ok) {
                     throw new Error('Failed to fetch cart items');
                 }
@@ -83,7 +89,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'API-Key': process.env.DATA_API_KEY!,
+                                'API_Key': process.env.DATA_API_KEY!,
                             },
                             body: JSON.stringify({userId: session?.user.id, itemId: id, quantity: item.quantity + 1}),
                         });
@@ -112,19 +118,34 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
 
     function decreaseCartQuantity(id: string) {
         setCartItems(currItems => {
-            return currItems.map(item => {
+            return currItems.flatMap(item => {
                 if (item.id === id) {
-                    (async () => {
-                        const res = await fetch('/api/orders/'+session?.user.id, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'API-Key': process.env.DATA_API_KEY!,
-                            },
-                            body: JSON.stringify({ userId: session?.user.id, itemId: id, quantity: item.quantity - 1}),
-                        });
-                    })();
-                    return { ...item, quantity: item.quantity - 1 };
+                    const newQuantity = item.quantity - 1;
+                    if (newQuantity > 0) {
+                        (async () => {
+                            await fetch('/api/orders/'+session?.user.id, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'API_Key': process.env.DATA_API_KEY!,
+                                },
+                                body: JSON.stringify({ userId: session?.user.id, itemId: id, quantity: newQuantity}),
+                            });
+                        })();
+                        return { ...item, quantity: newQuantity };
+                    } else {
+                        (async () => {
+                            await fetch('/api/orders/'+session?.user.id, {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'API_Key': process.env.DATA_API_KEY!,
+                                },
+                                body: JSON.stringify({ userId: session?.user.id, itemId: id}),
+                            });
+                        })();
+                        return [];
+                    }
                 } else {
                     return item;
                 }

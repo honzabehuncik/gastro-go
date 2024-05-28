@@ -277,7 +277,6 @@ export async function updateOrderQuantity(userId: string, itemId: any, quantity:
             menuId: itemId
         }
     })
-    console.log(itemId, " ", customerOrder!.id)
     const order = await prisma.orderItem.update({
         where: {
             id: item!.id
@@ -287,4 +286,39 @@ export async function updateOrderQuantity(userId: string, itemId: any, quantity:
         }
     })
     return order
+}
+
+export async function updateStatus(orderId: string, statusId: string){
+    const status = await prisma.customerOrder.update({
+        where:{
+            id: orderId
+        },
+        data:{
+            statusId: statusId
+        }
+    })
+
+    return status
+}
+
+export async function delOrder(userId: string, itemId: string){
+    const customerOrder = await prisma.customerOrder.findFirst({
+        where: {
+            userId: userId
+        }
+    });
+    const item = await prisma.orderItem.findFirst({
+        where: {
+            orderId: customerOrder!.id,
+            menuId: itemId
+        }
+    })
+    const order = await prisma.orderItem.delete({
+        where: {
+            id: item!.id
+        }
+    })
+
+    return order
+
 }

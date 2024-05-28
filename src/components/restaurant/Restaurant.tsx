@@ -28,12 +28,10 @@ export default function Restaurant({ restaurant }: { restaurant: any }) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'API-Key': process.env.DATA_API_KEY!,
+                'API_Key': process.env.DATA_API_KEY!,
             },
             body: JSON.stringify({ userId, itemId }),
         });
-    
-        console.log(res);
     
         addToCart({
             id: itemId,
