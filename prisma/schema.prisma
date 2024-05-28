@@ -51,6 +51,7 @@ model User {
   driver        Driver?
   accounts      Account[]
   sessions      Session[]
+  Requests      Requests[]
 
   @@map("users")
 }
@@ -78,6 +79,7 @@ model Restaurant {
   Category     Category[]
   orders       CustomerOrder[]
   badges       Badge[]         @relation("RestaurantId")
+  Requests     Requests[]
 }
 
 model Badge {
@@ -150,7 +152,7 @@ model OrderItem {
 }
 
 model Requests {
-  id                  String    @id @default(cuid())
+  id                  String      @id @default(cuid())
   userId              String?
   userName            String?
   restaurantId        String?
@@ -160,4 +162,6 @@ model Requests {
   restaurantOpenTime  DateTime?
   restaurantCloseTime DateTime?
   category            Boolean?
+  user                User?       @relation(fields: [userId], references: [id])
+  restaurant          Restaurant? @relation(fields: [restaurantId], references: [id])
 }
