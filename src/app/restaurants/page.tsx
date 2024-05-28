@@ -63,7 +63,6 @@ export default async function DriverPage() {
                                         </div>
                                         <form action={completeOrder}>
                                             <input type="hidden" name="id" value={order.id}></input>
-                                            <button className="assign-button">Dokončit objednávku</button>
                                         </form>
                                         <Accordion type="single" collapsible>
   <AccordionItem value="item-1">
