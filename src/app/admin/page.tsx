@@ -18,7 +18,7 @@ export default async function AdminPage() {
         "use server"
         const id = formData.get("id")
         if(id){
-            const request = await prisma.requests.update({
+            const request = await prisma.user.update({
                 where: {
                     id: id as string
                 },

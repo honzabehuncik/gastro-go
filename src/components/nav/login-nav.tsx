@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import "./navbar-login.css";
-import { FaUser } from "react-icons/fa"; // Import ikony uživatele
 import { signIn } from "next-auth/react";
 
 export default function NavLogin() {
