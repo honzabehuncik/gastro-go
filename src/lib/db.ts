@@ -79,9 +79,19 @@ export async function addToCartDB(id: string, userId: string) {
     const menu = await getItem(id);
     const user = await getUser(userId);
 
-    if (user?.orders && user.orders.length <= 0) {
-        if (menu?.category?.restaurant?.id) {
-            const customerOrder = await prisma.customerOrder.create({
+    if (!menu) {
+        throw new Error('Menu item not found');
+    }
+
+    let customerOrder;
+
+    // Check if user has any orders
+    if (user?.orders && user.orders.length > 0) {
+        customerOrder = user.orders[0];
+    } else {
+        // Create a new customer order if none exists
+        if (menu.category?.restaurant?.id) {
+            customerOrder = await prisma.customerOrder.create({
                 data: {
                     userId: userId,
                     restaurantId: menu.category.restaurant.id,
@@ -93,68 +103,53 @@ export async function addToCartDB(id: string, userId: string) {
                     user: true
                 }
             });
-
-            const itemOrder = await prisma.orderItem.findFirst({
-                where: {
-                    orderId: customerOrder.id,
-                    menuId: menu.id
-                }
-            });
-
-            if (itemOrder) {
-                const updatedItemOrder = await prisma.orderItem.update({
-                    where: {
-                        id: itemOrder.id
-                    },
-                    data: {
-                        quantity: itemOrder.quantity + 1
-                    },
-                    include: {
-                        order: true,
-                        menu: true
-                    }
-                });
-                return updatedItemOrder;
-            } else {
-                const newItemOrder = await prisma.orderItem.create({
-                    data: {
-                        orderId: customerOrder.id,
-                        menuId: menu.id,
-                        quantity: 1,
-                        itemPrice: menu.price
-                    },
-                    include: {
-                        order: true,
-                        menu: true
-                    }
-                });
-                return newItemOrder;
-            }
-
-            return itemOrder;
         } else {
-            console.log("success");
+            throw new Error('Restaurant not found for the menu item');
         }
-    } else {
-        const customerOrder = user?.orders[0];
-        const customerOrderId = customerOrder?.id;
-        console.log(menu?.category?.restaurant?.id);
+    }
 
-        if (menu?.category?.restaurant?.id && customerOrderId) {
-            const itemOrder = await prisma.orderItem.create({
-                data: {
-                    orderId: customerOrderId,
-                    menuId: menu.id,
-                    quantity: 1,
-                    itemPrice: menu.price
-                },
-                include: {
-                    order: true,
-                    menu: true
-                }
-            });
-            return itemOrder;
+    if (!customerOrder) {
+        throw new Error('Customer order not found or could not be created');
+    }
+
+    // Check if the order item already exists in the order
+    const existingOrderItem = await prisma.orderItem.findFirst({
+        where: {
+            orderId: customerOrder.id,
+            menuId: menu.id
         }
+    });
+
+    if (existingOrderItem) {
+        // If the order item exists, increase the quantity
+        const updatedOrderItem = await prisma.orderItem.update({
+            where: {
+                id: existingOrderItem.id
+            },
+            data: {
+                quantity: existingOrderItem.quantity + 1
+            },
+            include: {
+                order: true,
+                menu: true
+            }
+        });
+        return updatedOrderItem;
+    } else {
+        // If the order item does not exist, create a new one
+        const newOrderItem = await prisma.orderItem.create({
+            data: {
+                orderId: customerOrder.id,
+                menuId: menu.id,
+                quantity: 1,
+                itemPrice: menu.price
+            },
+            include: {
+                order: true,
+                menu: true
+            }
+        });
+        return newOrderItem;
     }
 }
 
@@ -230,4 +225,28 @@ export async function getItemsToCart(userId: string){
         return order
     }
     return null
+}
+
+export async function updateOrderQuantity(userId: string, itemId: any, quantity: any){
+    const customerOrder = await prisma.customerOrder.findFirst({
+        where: {
+            userId: userId
+        }
+    });
+    const item = await prisma.orderItem.findFirst({
+        where: {
+            orderId: customerOrder!.id,
+            menuId: itemId
+        }
+    })
+    console.log(itemId, " ", customerOrder!.id)
+    const order = await prisma.orderItem.update({
+        where: {
+            id: item!.id
+        },
+        data: {
+            quantity: quantity
+        }
+    })
+    return order
 }

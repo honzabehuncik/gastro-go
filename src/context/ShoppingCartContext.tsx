@@ -78,28 +78,57 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         setCartItems(currItems => {
             return currItems.map(item => {
                 if (item.id === id) {
+                    (async () => {
+                        const res = await fetch('/api/orders/'+session?.user.id, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'API-Key': process.env.DATA_API_KEY!,
+                            },
+                            body: JSON.stringify({userId: session?.user.id, itemId: id, quantity: item.quantity + 1}),
+                        });
+                    })();
                     return { ...item, quantity: item.quantity + 1 };
                 } else {
                     return item;
                 }
             });
         });
-    }
+    }    
     
     const addToCart = (item: CartItem) => {
-        setCartItems((prevItems) => [...prevItems, item]);
+        setCartItems(prevItems => {
+            const existingItem = prevItems.find(prevItem => prevItem.id === item.id);
+    
+            if (existingItem) {
+                return prevItems.map(prevItem => 
+                    prevItem.id === item.id ? { ...prevItem, quantity: prevItem.quantity + 1 } : prevItem
+                );
+            } else {
+                return [...prevItems, item];
+            }
+        });
       };
 
     function decreaseCartQuantity(id: string) {
         setCartItems(currItems => {
-            const updatedItems = currItems.map(item => {
-                if (item.id === id && item.quantity > 1) {
+            return currItems.map(item => {
+                if (item.id === id) {
+                    (async () => {
+                        const res = await fetch('/api/orders/'+session?.user.id, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'API-Key': process.env.DATA_API_KEY!,
+                            },
+                            body: JSON.stringify({ userId: session?.user.id, itemId: id, quantity: item.quantity - 1}),
+                        });
+                    })();
                     return { ...item, quantity: item.quantity - 1 };
                 } else {
                     return item;
                 }
             });
-            return updatedItems.filter(item => item.id !== id);
         });
     }
 
