@@ -1,7 +1,7 @@
 import { signIn } from "next-auth/react";
 import "./menu.css";
 import { getRestaurants } from "@/lib/db";
-import Tags from "@/components/tags/page";
+import Tags from "@/components/tags/Tags";
 import { auth } from '@/auth';
 
 export default async function Menu({ searchParams }: { searchParams: { tags?: string } }) {

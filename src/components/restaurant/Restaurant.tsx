@@ -1,22 +1,54 @@
-import { auth } from "@/auth";
-import React, { useState } from "react";
-import { IoIosAdd } from "react-icons/io";
-import "./restaurant.css";
+"use client"
+
+import React from "react";
 import { notFound } from "next/navigation";
-import { addToCartDB } from "@/lib/db";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import Notification from "../notification";
+import { useSession } from "next-auth/react";
+import { useShoppingCart } from "@/context/ShoppingCartContext";
+import "./restaurant.css"
 
-export default async function Restaurant({ restaurant }: { restaurant: any }) {
+export default function Restaurant({ restaurant }: { restaurant: any }) {
     if (!restaurant) return notFound()
+    
+    const {addToCart} = useShoppingCart()
+    const {data: session} = useSession()
 
-    const session = await auth()
-    const heading = !session ? "Neoprávněný přístup!" : "Administrace - rozvoz";
-
-    async function addToCart(formData: FormData){
-        "use server"
-        const itemId = formData.get("id")
-        const userId = session!.user!.id
-        const order = addToCartDB(itemId as string, userId as string)
-    }
+    const addToCartDB = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const itemId = formData.get("itemId") as string; // Získat id přímo z formuláře
+        const itemName = formData.get("name") as string; // Získat název položky z formuláře
+        const itemPrice = formData.get("price"); // Získat cenu položky z formuláře
+        const userId = session?.user?.id;
+    
+        if (!userId) return;
+    
+        const res = await fetch('/api/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'API-Key': process.env.DATA_API_KEY!,
+            },
+            body: JSON.stringify({ userId, itemId }),
+        });
+    
+        console.log(res);
+    
+        addToCart({
+            id: itemId,
+            quantity: 1,
+            name: itemName,
+            price: itemPrice,
+        });
+    
+        if (res.ok) {
+            toast.success("Item added to cart!");
+        } else {
+            toast.error("Failed to add item to cart.");
+        }
+    };
 
     return (
         <main>
@@ -31,33 +63,8 @@ export default async function Restaurant({ restaurant }: { restaurant: any }) {
 
             <div className="menu-detailed">
                 <div className="menu-detailed-container">
-                        {/* <div>
-                            {restaurant.badges.map((badge: any) => (
-                                <span
-                                    key={badge}
-                                    className={`tag ${selectedTags.includes(badge.label) ? 'active' : ''}`}
-                                    onClick={() => toggleTag(badge.label)}
-                                >
-                                    {badge.label}
-                                </span>
-                            ))}
-                        </div> 
-
-                        <div className="searchbar-container">
-                            <FaSearch className="searchbar-icon" />
-                            <input
-                            type="text"
-                            className="searchbar-input"
-                            placeholder="Na co máte chuť?"/>
-                            <button className="find-button">
-                                <a href="#">Hledat</a>
-                            </button>
-                        </div> */}
-
-                    
-
-                        {restaurant.Category.map((category: any) => (
-                        <>
+                    {restaurant.Category.map((category: any) => (
+                        <div key={category.name}>
                             <h1>{category.name}</h1>
                             <div className="card-container">
                                 {category.menus.map((menu: any) => (
@@ -67,21 +74,21 @@ export default async function Restaurant({ restaurant }: { restaurant: any }) {
                                         <h3>{menu.price as string} Kč</h3>
                                         <p>{menu.description}</p>
                                         <div className="badges">
-                                            <form action={addToCart}>
-                                                <input type="hidden" name="id" value={menu.id}/>
-                                                <input type="hidden" name="id" value={menu.id}/>
-                                                <button type="submit" className="add-button">
-                                                    <IoIosAdd className="plus-icon" />
-                                                </button>
+                                            <form onSubmit={addToCartDB}>
+                                                <input type="hidden" name="price" value={menu.price}/>
+                                                <input type="hidden" name="name" value={menu.name}/>
+                                                <input type="hidden" name="itemId" value={menu.id}/>
+                                                <button type="submit">Přidat do košíku</button>
                                             </form>
                                         </div>
                                     </div>
                                 ))}
                             </div>
-                        </>
+                        </div>
                     ))}
                 </div>
             </div>
+            <ToastContainer />
         </main>
     );
 }

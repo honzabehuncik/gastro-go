@@ -1,7 +1,7 @@
 import Link from "next/link";
 import "./navbar.css";
 import Search from "@/components/nav/menu-search"
-import BasketMenu from "./basketMenu";
+import BasketMenu from "./basket-menu";
 import { auth } from "@/auth";
 import { getOrders } from "@/lib/db";
 
@@ -21,7 +21,7 @@ export default async function DashboardNav(){
         <header>
             <nav>
                 <Link href="/" className="logo">GastroGO</Link>
-                <Search></Search>
+                <Search/>
                 <BasketMenu order={order}/>
             </nav>
         </header>

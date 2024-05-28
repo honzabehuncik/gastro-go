@@ -78,7 +78,7 @@ export default function DashboardPage() {
                             <div className="user-profile">
                                 <div className="user-card">
                                     <div className="user-avatar">
-                                        <img src={session.user?.image} alt="User Avatar" />
+                                        <img src={session.user?.image ? session.user?.image : ""} alt="User Avatar" />
                                     </div>
                                     <div className="user-info">
                                         <h1>{session.user?.name}</h1>
@@ -88,13 +88,13 @@ export default function DashboardPage() {
                             </div>
                             <div className="user-actions">
                             <CourierButton
-    onClick={() => setIsOpenCourier(true)}
-    disabled={isCourierSignedUp}
-    isCourierSignedUp={isCourierSignedUp}
-    disabledColor="#ccc" // Nová props pro barvu zakázaného tlačítka
->
-    {isCourierSignedUp ? "Už jste řidič" : "Přihlásit se jako kurýr"}
-</CourierButton>
+                                onClick={() => setIsOpenCourier(true)}
+                                disabled={isCourierSignedUp}
+                                isCourierSignedUp={isCourierSignedUp}
+                                disabledColor="#ccc" // Nová props pro barvu zakázaného tlačítka
+                            >
+                                {isCourierSignedUp ? "Už jste řidič" : "Přihlásit se jako kurýr"}
+                            </CourierButton>
                                 <button className="btn-primary" onClick={() => setIsOpenRestaurant(true)}>Zažádat o přidání restaurace</button>
                                 <button className="btn-logout" onClick={() => signOut()}>Odhlásit se</button>
                             </div>

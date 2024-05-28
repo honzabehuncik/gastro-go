@@ -15,7 +15,7 @@ export default async function Nav(){
     let orders = null
     let order = null
     if(session?.user?.id){
-        
+
         orders = await getOrders(session?.user?.id)
         if(orders && orders.length > 0){
             order = orders[0].orderItems 
@@ -25,10 +25,10 @@ export default async function Nav(){
     return (
         <>
             {!session && path === "/" && <NavLogin />}
-            {path === "/dashboard" && <DashboardNav order={order}/>}
-            {path === "/driver" && <DashboardNav order={order}/>}
-            {path === "/restaurants" && <DashboardNav order={order}/>}
-            {path === "/status" && <DashboardNav order={order}/>}
+            {path === "/dashboard" && <DashboardNav />}
+            {path === "/driver" && <DashboardNav />}
+            {path === "/restaurants" &&<DashboardNav />}
+            {path === "/status" && <DashboardNav />}
             {(!(path === "/dashboard" || path === "/menu" || path === "/driver" || path === "/restaurants" || path === "/status" )) && session && <MenuNav />}
         </>
     );
