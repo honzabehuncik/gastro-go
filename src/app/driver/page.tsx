@@ -1,8 +1,8 @@
 
 import { signIn, useSession } from "next-auth/react";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./driver.css";
-import { getCustomerOrder } from "@/lib/db";
+import { getCustomerOrderDriver } from "@/lib/db";
 import { auth } from '@/auth';
 import { parseISO, addMinutes, format } from 'date-fns';
 
@@ -11,7 +11,7 @@ export default async function DriverPage() {
     const session = await auth();
     const heading = !session ? "Neoprávněný přístup!" : "Administrace - rozvoz";
 
-    let customerOrder = await getCustomerOrder();
+    let customerOrder = await getCustomerOrderDriver();
     return (
         <main>
             <div className="driver">
