@@ -4,16 +4,14 @@ import "./restaurants.css";
 import { getCustomerOrderRestaurant, updateStatus } from "@/lib/db";
 import { auth } from '@/auth';
 import { format, addMinutes } from 'date-fns';
-<<<<<<< Updated upstream
 import { revalidatePath } from "next/cache";
-=======
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
   } from "@/components/ui/accordion"  
->>>>>>> Stashed changes
+
 
 export default async function DriverPage() {
     const session = await auth();
@@ -63,12 +61,10 @@ export default async function DriverPage() {
                                             ))}
                                         
                                         </div>
-<<<<<<< Updated upstream
                                         <form action={completeOrder}>
                                             <input type="hidden" name="id" value={order.id}></input>
                                             <button className="assign-button">Dokončit objednávku</button>
                                         </form>
-=======
                                         <Accordion type="single" collapsible>
   <AccordionItem value="item-1">
     <AccordionTrigger className="details-btn"></AccordionTrigger>
@@ -100,8 +96,6 @@ export default async function DriverPage() {
     </AccordionContent>
   </AccordionItem>
 </Accordion>
-
->>>>>>> Stashed changes
                                     </div>
                                 ))}
                             </div>
