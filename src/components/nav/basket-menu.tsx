@@ -56,8 +56,8 @@ export default function BasketMenu() {
                                 <ul>
                                     {cartItems.map((item: any, index: number) => (
                                         <li key={index} className="basket-item">
-                                            <span className="item-name">{item.name}</span>
-                                            <span className="item-price">{item.price} Kč</span>
+                                            <span className="item-name">{item.quantity}x {item.name}</span>
+                                            <span className="item-price">{item.price*item.quantity} Kč</span>
                                         </li>
                                     ))}
                                 </ul>

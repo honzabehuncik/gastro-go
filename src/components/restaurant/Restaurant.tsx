@@ -4,7 +4,6 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import Notification from "../notification";
 import { useSession } from "next-auth/react";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 import "./restaurant.css"
@@ -18,9 +17,9 @@ export default function Restaurant({ restaurant }: { restaurant: any }) {
     const addToCartDB = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        const itemId = formData.get("itemId") as string; // Získat id přímo z formuláře
-        const itemName = formData.get("name") as string; // Získat název položky z formuláře
-        const itemPrice = formData.get("price"); // Získat cenu položky z formuláře
+        const itemId = formData.get("itemId") as string;
+        const itemName = formData.get("name") as string;
+        const itemPrice = formData.get("price");
         const userId = session?.user?.id;
     
         if (!userId) return;
