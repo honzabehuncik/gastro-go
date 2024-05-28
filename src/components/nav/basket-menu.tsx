@@ -5,8 +5,10 @@ import { FaBasketShopping } from "react-icons/fa6";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link"
 import { useSession, signOut } from "next-auth/react";
+import { useShoppingCart } from "@/context/ShoppingCartContext";
 
-export default function BasketMenu(order: any){
+export default function BasketMenu() {
+    const { cartItems } = useShoppingCart();
     const [basketDropdownOpen, setBasketDropdownOpen] = useState(false);
     const [userDropdownOpen, setUserDropdownOpen] = useState(false);
     const [price, setPrice] = useState()
@@ -39,14 +41,9 @@ export default function BasketMenu(order: any){
         setUserDropdownOpen(!userDropdownOpen);
     };
 
-    let totalPrice = 0;
-    if(order && order.length > 0){
-        for (let i = 0; i < order.order.length; i++) {
-            totalPrice += order.order[i].itemPrice * order.order[i].quantity;
-        }
-    }
+    let totalPrice = cartItems.reduce((total, item) => total + item!.price! * item.quantity, 0);
 
-    return(
+    return (
         <div className="user-menu">
             <div ref={basketRef}>
                 <button className="basket-button" onClick={toggleBasketDropdown}>
@@ -55,22 +52,22 @@ export default function BasketMenu(order: any){
                 {basketDropdownOpen && (
                     <div className="dropdown-menu basket-dropdown">
                         <ul className="basket-items">
-                        {order && order.length > 0 ? (
-                            <ul>
-                                {order.map((item: any) => (
-                                    <li key={item.menu.id} className="basket-item">
-                                        <span className="item-name">{item.menu.name}</span>
-                                        <span className="item-price">{item.menu.price} Kč</span>
+                            {cartItems.length > 0 ? (
+                                <ul>
+                                    {cartItems.map((item: any, index: number) => (
+                                        <li key={index} className="basket-item">
+                                            <span className="item-name">{item.name}</span>
+                                            <span className="item-price">{item.price} Kč</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <ul>
+                                    <li className="basket-item">
+                                        Košík je prázdný.
                                     </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <ul>
-                                <li className="basket-item">
-                                  
-                                </li>
-                            </ul>
-                        )}
+                                </ul>
+                            )}
                         </ul>
                         <div className="total-price">
                             <span className="total-label">Celková cena:</span>

@@ -1,26 +1,20 @@
-import { signIn } from "next-auth/react";
+"use client"
+
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import "./checkout.css";
-import { auth } from '@/auth';
 import { getOrders } from "@/lib/db";
+import { useShoppingCart } from "@/context/ShoppingCartContext";
 
 
-export default async function CheckoutPage() {
-    const session = await auth()
-    let orders = null
-    let order = null
-    let totalPrice = 0
-    if(session?.user?.id){
-        orders = await getOrders(session?.user?.id)
-        if(orders && orders.length > 0){
-            order = orders[0].orderItems 
-            totalPrice = 0;
-            for (let i = 0; i < order.length; i++) {
-                totalPrice += order[i].itemPrice * order[i].quantity;
-            }
-        }
-    }
+export default function CheckoutPage() {
+    const { data: session } = useSession();
+
+    const {getItemQuantity, increaseCartQuantity, decreaseCartQuantity, cartItems} = useShoppingCart()
+    // const quantity = getItemQuantity(order?)
+
+    let totalPrice = cartItems.reduce((total, item) => total + item!.price! * item.quantity, 0);
     
 
     const heading = !session ? "Neoprávněný přístup!" : "Přehled vaší objednávky";
@@ -43,20 +37,19 @@ export default async function CheckoutPage() {
                                 <br></br>Objednávku můžete libovolně měnit, případně můžete přidávat další položky.
                             </p>
                             <div className="order-table">
-                                {order?.map((order) => (
-                                    <div key={order.menu.id} className="order-row">
+                                {cartItems.map((item: any, index: number) => (
+                                    <div key={index} className="order-row">
                                         <div className="order-details">
                                             <div className="order-heading">
-                                                <strong><span className="quantity-color">{order.quantity}x</span> {order.menu.name}</strong><br/>
+                                                <strong><span className="quantity-color">{item.quantity}x</span> {item.name}</strong><br/>
                                             </div>
-                                            {order.menu.description}<br/>
                                             <div className="button-container">
-                                                <button className="add-button">+1</button>
-                                                <button className="remove-button">-1</button>
+                                                <button onClick={() => increaseCartQuantity(item.id)} className="add-button">+1</button>
+                                                <button onClick={() => decreaseCartQuantity(item.id)} className="remove-button">-1</button>
                                             </div>
                                         </div>
                                         <div className="price">
-                                            <p>{order.itemPrice * order.quantity} Kč</p>
+                                            <p>{item.price * item.quantity} Kč</p>
                                         </div>              
                                     </div>
                                 ))}
@@ -64,7 +57,7 @@ export default async function CheckoutPage() {
                             <div className="final-price">
                                 <p>Celková cena: <span className="price-highlighted">{totalPrice} Kč</span></p>
                             </div>
-                            <Link href="/status"><button className="add-button">Objednat</button></Link>
+                            <Link href="/status"><button className="add-button" >Objednat</button></Link>
                         </>
                     ) : (
                         <>

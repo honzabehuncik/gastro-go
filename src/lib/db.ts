@@ -94,18 +94,42 @@ export async function addToCartDB(id: string, userId: string) {
                 }
             });
 
-            const itemOrder = await prisma.orderItem.create({
-                data: {
+            const itemOrder = await prisma.orderItem.findFirst({
+                where: {
                     orderId: customerOrder.id,
-                    menuId: menu.id,
-                    quantity: 1,
-                    itemPrice: menu.price
-                },
-                include: {
-                    order: true,
-                    menu: true
+                    menuId: menu.id
                 }
             });
+
+            if (itemOrder) {
+                const updatedItemOrder = await prisma.orderItem.update({
+                    where: {
+                        id: itemOrder.id
+                    },
+                    data: {
+                        quantity: itemOrder.quantity + 1
+                    },
+                    include: {
+                        order: true,
+                        menu: true
+                    }
+                });
+                return updatedItemOrder;
+            } else {
+                const newItemOrder = await prisma.orderItem.create({
+                    data: {
+                        orderId: customerOrder.id,
+                        menuId: menu.id,
+                        quantity: 1,
+                        itemPrice: menu.price
+                    },
+                    include: {
+                        order: true,
+                        menu: true
+                    }
+                });
+                return newItemOrder;
+            }
 
             return itemOrder;
         } else {
@@ -148,7 +172,9 @@ export async function getOrders(id: string) {
                 include: {
                     menu: true
                 }
-            }
+            },
+            restaurant: true,
+            user: true
         }
     });
     return orders;
@@ -194,3 +220,14 @@ export async function getAllRequests() {
     return requests;
 }
 
+
+
+export async function getItemsToCart(userId: string){
+    let orders = await getOrders(userId)
+    let order
+    if(orders && orders.length > 0){
+        order = orders[0].orderItems 
+        return order
+    }
+    return null
+}
