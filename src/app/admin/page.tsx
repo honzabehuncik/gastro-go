@@ -3,12 +3,25 @@ import React from "react";
 import "./admin.css";
 import { getAllRequests } from "@/lib/db";
 import { auth } from '@/auth';
+import { createPrismaClient } from "@/lib/prisma";
+const prisma = createPrismaClient();
 
 export default async function AdminPage() {
     const session = await auth();
     const heading = !session ? "Neoprávněný přístup!" : "Admin panel";
 
-    let request = await getAllRequests();
+    const request = await getAllRequests();
+
+    async function acceptBtn(formData: FormData){
+        "use server"
+        const id = formData.get("id")
+        const request = await prisma.requests
+    }
+
+    async function discardBtn(formData: FormData){
+        "use server"
+        const id = formData.get("id")
+    }
 
     return (
         <main>
@@ -37,8 +50,14 @@ export default async function AdminPage() {
                                     <div className="request-details">{req.restaurantNumber}</div>
                                     <div className="request-details">CV</div>
                                     <div className="request-btns">
-                                    <button className="assign-button">Potvrdit</button>
-                                    <button className="remove-button">Zamítnout</button>
+                                    <form action={acceptBtn}>
+                                        <input name="id" type="hidden" value={req.id}></input>
+                                        <button type="submit" className="assign-button">Potvrdit</button> 
+                                    </form>
+                                    <form action={discardBtn}>
+                                        <input name="id" type="hidden" value={req.id}></input>
+                                        <button className="remove-button">Zamítnout</button>
+                                    </form>
                                     </div>
                                 </div>
                                 ))}
