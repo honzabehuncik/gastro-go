@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { delOrder, getOrders, updateOrderQuantity } from "@/lib/db";
+import { delOrder, getOrders, updateOrderQuantity, updateStatus } from "@/lib/db";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -88,6 +88,35 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     }
 
     const order = await delOrder(params.id, data.itemId)
+
+    return NextResponse.json(order)
+}
+
+export async function PUT(request: Request, { params }: { params: { id: string } }){
+    const { id } = params
+    const data = await request.json();
+    const session = await auth()
+    
+    const headersList = headers()
+    const key = headersList.get('API_KEY')
+    
+    
+    if((!session?.user && session?.user.role !== "Admin") || key != process.env.DATA_API_KEY){
+        return NextResponse.json(
+            {
+                error: "Unauthorized"
+            }, {status: 401}
+        );
+    }
+    if(!params.id || !data.statusId){
+        return NextResponse.json(
+            {
+                error: "userId/statusId nevyplněno"
+            }, {status: 400}
+        );
+    }
+
+    const order = await updateStatus(params.id, data.statusId)
 
     return NextResponse.json(order)
 }

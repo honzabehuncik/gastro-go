@@ -5,6 +5,7 @@ import { getCustomerOrderRestaurant, updateStatus } from "@/lib/db";
 import { auth } from '@/auth';
 import { format, addMinutes } from 'date-fns';
 import { revalidatePath } from "next/cache";
+import SubmitBtn from "@/components/restaurant/SubmitBtn";
 
 export default async function DriverPage() {
     const session = await auth();
@@ -17,7 +18,7 @@ export default async function DriverPage() {
         const id = formData.get("id") as string
         const statusId = "clwj4ynrv00035cjptyk5a0dt"
 
-        const order = await updateStatus(id, statusId)
+        const order = await updateStatus(session?.user.id!, statusId)
 
         revalidatePath("/restaurants")
 
@@ -34,7 +35,7 @@ export default async function DriverPage() {
                     </div>
                 </div>
                 <div className="driver-container">
-                    {session ? (
+                    {session && (session.user.role == "Restaurant" || session.user.role == "Admin")  ? (
                         <>
                             <h1>Nové objednávky</h1>
                             <p>
@@ -62,7 +63,7 @@ export default async function DriverPage() {
                                         </div>
                                         <form action={completeOrder}>
                                             <input type="hidden" name="id" value={order.id}></input>
-                                            <button className="assign-button">Dokončit objednávku</button>
+                                            <SubmitBtn></SubmitBtn>
                                         </form>
                                     </div>
                                 ))}

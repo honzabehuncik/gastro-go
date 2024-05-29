@@ -62,7 +62,7 @@ export async function getCustomerOrderRestaurant() {
 export async function getCustomerOrderDriver() {
     const customerOrder = await prisma.customerOrder.findMany({
         where: {
-            statusId: 'clwq0pv890000siwaxfcxp85g'
+            statusId: 'clwj4ynrv00035cjptyk5a0dt'
         },
         include: {
             restaurant: true,
@@ -288,17 +288,29 @@ export async function updateOrderQuantity(userId: string, itemId: any, quantity:
     return order
 }
 
-export async function updateStatus(orderId: string, statusId: string){
-    const status = await prisma.customerOrder.update({
-        where:{
-            id: orderId
-        },
-        data:{
-            statusId: statusId
-        }
-    })
+export async function updateStatus(userId: string, statusId: string){
+    const user = await getUser(userId); 
 
-    return status
+    if (user && user.orders && user.orders.length > 0) {
+        const order = user.orders.find(o => o.id); 
+    
+        if (order) {
+            const status = await prisma.customerOrder.update({
+                where: {
+                    id: order.id
+                },
+                data: {
+                    statusId: statusId
+                }
+            });
+            return status
+        } else {
+            console.error('Order not found');
+        }
+    } else {
+        console.error('User or orders not found');
+    }
+
 }
 
 export async function delOrder(userId: string, itemId: string){

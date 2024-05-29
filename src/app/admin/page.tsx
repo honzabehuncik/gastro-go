@@ -6,6 +6,7 @@ import { auth } from '@/auth';
 import { createPrismaClient } from "@/lib/prisma";
 import { DiscardButton, SubmitButton } from "@/components/admin/btn";
 import { revalidatePath } from "next/cache";
+import SignInBtn from "@/components/SignInBtn";
 const prisma = createPrismaClient();
 
 export default async function AdminPage() {
@@ -51,7 +52,7 @@ export default async function AdminPage() {
                     </div>
                 </div>
                 <div className="admin-container">
-                    {session ? (
+                    {session && session.user.role == "Admin" ? (
                         <>
                             <h1>Žádosti</h1>
                             <p>
@@ -86,7 +87,7 @@ export default async function AdminPage() {
                     ) : (
                         <>
                             <h1>Pro přístup na tuto stránku se musíte přihlásit!</h1>
-                            <button onClick={() => signIn("google")}>Přihlašte se přes Google</button>
+                            <SignInBtn></SignInBtn>
                         </>
                     )}
                 </div>
