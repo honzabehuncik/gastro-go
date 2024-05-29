@@ -6,6 +6,12 @@ import { auth } from '@/auth';
 import { format, addMinutes } from 'date-fns';
 import { revalidatePath } from "next/cache";
 import SubmitBtn from "@/components/restaurant/SubmitBtn";
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+  } from "@/components/ui/accordion"  
 
 export default async function DriverPage() {
     const session = await auth();
@@ -45,9 +51,6 @@ export default async function DriverPage() {
                             <div className="order-table">
                                 {customerOrder.map((order: any) => (
                                     <div key={order.id} className="order-row">
-                                        <div className={`order-status status-recorded`}>
-                                            {order.status.statusName}
-                                        </div>
                                         <div className="order-id">ID: #{order.id}</div>
                                         <div className="order-details">
                                             <strong>Položky:</strong>
@@ -56,15 +59,43 @@ export default async function DriverPage() {
                                                     <strong><span className="order-quantity">{item.quantity}x</span></strong> {item.menu.name}<br/>
                                                 </div>
                                             ))}
-                                            <strong>Kurýr:</strong> {order.driver ? `${order.driver.user.name} (${order.driver.vehicleInfo})` : "Nepřiřazen"}<br />
-                                            <strong>Adresa:</strong> {order.restaurant.address} {order.deliveryAddress}<br/>
-                                            <strong>Čas objednání:</strong> {format(new Date(order.orderDate), "dd.MM.yyyy HH:mm")}<br/>
-                                            <strong>Čas doručení:</strong> {format(addMinutes(new Date(order.orderDate), 40), "dd.MM.yyyy HH:mm")}
+                                        
                                         </div>
                                         <form action={completeOrder}>
                                             <input type="hidden" name="id" value={order.id}></input>
                                             <SubmitBtn></SubmitBtn>
                                         </form>
+                                        <Accordion type="single" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger className="details-btn"></AccordionTrigger>
+    <AccordionContent>
+        <div id="wrapper">
+            <div className="leftSide">
+                <div className="map-image"></div>
+            </div>
+
+            <div className="rightSide">
+                            <div className="right-1">
+                                <div className="info">
+                                    <strong>Kurýr:</strong> {order.driver ? `${order.driver.user.name} (${order.driver.vehicleInfo})` : "Nepřiřazen"}<br />
+                                    <strong>Adresa:</strong> {order.restaurant.address} {order.deliveryAddress}<br/>
+                                    <strong>Čas objednání:</strong> {format(new Date(order.orderDate), "dd.MM.yyyy HH:mm")}<br/>
+                                    <strong>Čas doručení:</strong> {format(addMinutes(new Date(order.orderDate), 40), "dd.MM.yyyy HH:mm")}<br/>
+                                </div>
+                                
+                                <button className="assign-button">Dokončit objednávku</button>
+                            </div>
+
+                            <div className="right-2">
+                                <div className={`order-status status-recorded`}>
+                                {order.status.statusName}
+                                </div>
+                            </div>      
+            </div>
+        </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
                                     </div>
                                 ))}
                             </div>

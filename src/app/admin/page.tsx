@@ -54,6 +54,20 @@ export default async function AdminPage() {
                 <div className="admin-container">
                     {session && session.user.role == "Admin" ? (
                         <>
+                        <h1>Statistiky</h1>
+                        <div id="wrapper">
+                            <div className="stats-left">
+                                <h2>Aktivních objednávek: <strong>29</strong></h2>
+                                <h2>Aktivních kurýrů: <strong>11</strong></h2>
+                            </div>
+
+                            <div className="stat-right">
+                                <h2>Otevřených restaurací: <strong>20</strong></h2>
+                                <h2>Restaurací celkem: <strong>52</strong></h2>
+                            </div>
+                        </div>
+                       
+
                             <h1>Žádosti</h1>
                             <p>
                                 Níže nalezne aktuální žádosti o přidání nové restaurace nebo o získání statusu kurýra.
