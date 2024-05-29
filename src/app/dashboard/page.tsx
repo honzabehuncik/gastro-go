@@ -75,6 +75,27 @@ export default function DashboardPage() {
         }
     };
 
+    const handleRestaurantSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch('/api/request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: session?.user.id,
+                    userName: session?.user.name,
+                    ...restaurantForm,
+                    restaurantNumber: parseInt(restaurantForm.phone),
+                })
+            });
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     return (
         <main>
             <div className="dashboard">
@@ -133,14 +154,13 @@ export default function DashboardPage() {
                                         </CloseButton>
                                     </DialogHeader>
                                     <Title>Zažádat o přidání restaurace</Title>
-                                    <Form>
+                                    <Form onSubmit={handleRestaurantSubmit}>
                                         {["name", "address", "email", "phone"].map(field => (
                                             <Input
                                                 key={field}
                                                 type={field === "email" ? "email" : "text"}
                                                 placeholder={`${field}*`}
                                                 name={field}
-                                                value={field}
                                                 onChange={handleInputChange}
                                             />
                                         ))}
