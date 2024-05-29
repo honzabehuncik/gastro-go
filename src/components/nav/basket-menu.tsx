@@ -85,8 +85,8 @@ export default function BasketMenu() {
                 {userDropdownOpen && (
                     <div className="dropdown-menu">
                         <Link href="/dashboard">👤 Účet</Link>
-                        {session?.user?.role === "Driver" || session?.user?.role === "Admin" && <Link href="/driver">📝 Kariéra</Link>}
-                        {session?.user?.role === "Admin" && <Link href="/restaurants">🍕 Správa objednávek</Link>}
+                        {(session?.user?.role === "Driver" || session?.user?.role === "Admin") && <Link href="/driver">📝 Kariéra</Link>}
+                        {(session?.user?.role === "Restaurant" || session?.user?.role === "Admin") && <Link href="/restaurants">🍕 Správa objednávek</Link>}
                         {session?.user?.role === "Admin" && <Link href="/admin">🔧 Admin panel</Link>}
                         <Link href="/" onClick={() => signOut({ callbackUrl: '/' })}>👋🏼 Odhlásit se</Link>
                     </div>

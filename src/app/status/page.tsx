@@ -5,7 +5,8 @@ import React, { useState, useEffect } from "react";
 import "./status.css";
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { FaInfoCircle } from 'react-icons/fa';
-import { TbCircleNumber1Filled, TbCircleNumber2Filled, TbCircleNumber3Filled } from "react-icons/tb";
+import { TbCircleNumber1Filled, TbCircleNumber2Filled, TbCircleNumber3Filled, TbCircleNumber4Filled } from "react-icons/tb";
+import { useShoppingCart } from "@/context/ShoppingCartContext"
 
 const totalMinutes = 1; // time remaining in minutes
 
@@ -18,7 +19,7 @@ const timerProps = {
   strokeWidth: 13
 };
 
-const renderTime = (dimension, time) => {
+const renderTime = (dimension: any, time: any) => {
     if (time === 0) {
         return (
           <div className="time-wrapper">
@@ -42,9 +43,10 @@ const renderTime = (dimension, time) => {
     );
 };
 
-const getTimeMinutes = (time) => Math.ceil((time % remainingTime) / minuteSeconds);
+const getTimeMinutes = (time: any) => Math.ceil((time % remainingTime) / minuteSeconds);
 
 export default function DashboardPage() {
+    const {setOrderStatus, orderStatus} = useShoppingCart()
     const { data: session } = useSession();
     const [showFeedback, setShowFeedback] = useState(false);
     const [selectedEmoji, setSelectedEmoji] = useState(null);
@@ -57,7 +59,7 @@ export default function DashboardPage() {
         return () => clearTimeout(timer);
     }, []);
 
-    const handleEmojiClick = (emoji) => {
+    const handleEmojiClick = (emoji: any) => {
         setSelectedEmoji(emoji);
     };
 
@@ -69,6 +71,11 @@ export default function DashboardPage() {
             alert("Vyberte prosím smajlík.");
         }
     };
+
+    useEffect(() => {
+        console.log(orderStatus);
+    }, [orderStatus]);
+
 
     return (
         <main>
@@ -83,7 +90,7 @@ export default function DashboardPage() {
                     {session ? (
                         <>
                             <div className="order-details">
-                                <div className="order-step active">
+                                <div className={orderStatus === "clwj4ynrt00025cjp41o2zuge" ? "order-step active" : "order-step inactive"}>
                                     <div className="order-content">
                                         <TbCircleNumber1Filled className="icon"/>
                                         <div>
@@ -92,7 +99,7 @@ export default function DashboardPage() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="order-step inactive">
+                                <div className={orderStatus === "clwj4ynrv00035cjptyk5a0dt" ? "order-step active" : "order-step inactive"}>
                                     <div className="order-content">
                                         <TbCircleNumber2Filled className="icon" />
                                         <div>
@@ -101,7 +108,7 @@ export default function DashboardPage() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="order-step inactive">
+                                <div className={orderStatus === "clwq0pv8e0001siwalohbw23f" ? "order-step active" : "order-step inactive"}>
                                     <div className="order-content">
                                         <TbCircleNumber3Filled className="icon" />
                                         <div>

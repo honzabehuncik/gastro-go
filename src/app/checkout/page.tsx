@@ -6,18 +6,37 @@ import React, { useEffect } from "react";
 import "./checkout.css";
 import { getOrders } from "@/lib/db";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
+import { useRouter } from "next/navigation";
 
 
 export default function CheckoutPage() {
     const { data: session } = useSession();
+    const router = useRouter()
 
-    const {getItemQuantity, increaseCartQuantity, decreaseCartQuantity, cartItems} = useShoppingCart()
-    // const quantity = getItemQuantity(order?)
+    const {increaseCartQuantity, decreaseCartQuantity, cartItems, setOrderStatus, clearOrder} = useShoppingCart()
 
     let totalPrice = cartItems.reduce((total, item) => total + item!.price! * item.quantity, 0);
     
 
     const heading = !session ? "Neoprávněný přístup!" : "Přehled vaší objednávky";
+
+    const handleOrder = async () => {
+        if (!session) return;
+
+        const response = await fetch(`/api/orders/${session.user.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'API_KEY': process.env.DATA_API_KEY!
+            },
+            body: JSON.stringify({
+                statusId: "clwj4ynrt00025cjp41o2zuge"
+            }),
+        });
+
+        setOrderStatus("clwj4ynrt00025cjp41o2zuge");
+        router.push('/status');
+    };
 
     return (
         <main>
@@ -57,7 +76,7 @@ export default function CheckoutPage() {
                             <div className="final-price">
                                 <p>Celková cena: <span className="price-highlighted">{totalPrice} Kč</span></p>
                             </div>
-                            <Link href="/status"><button className="add-button" >Objednat</button></Link>
+                            <button onClick={handleOrder} className="add-button">Objednat</button>
                         </>
                     ) : (
                         <>

@@ -6,6 +6,7 @@ import { auth } from '@/auth';
 import { createPrismaClient } from "@/lib/prisma";
 import { DiscardButton, SubmitButton } from "@/components/admin/btn";
 import { revalidatePath } from "next/cache";
+import SignInBtn from "@/components/SignInBtn";
 const prisma = createPrismaClient();
 
 export default async function AdminPage() {
@@ -17,13 +18,14 @@ export default async function AdminPage() {
     async function acceptBtn(formData: FormData){
         "use server"
         const id = formData.get("id")
+        const category = formData.get("category")
         if(id){
             const request = await prisma.user.update({
                 where: {
                     id: id as string
                 },
                 data:{
-                    
+                    role: category == "false" ? "Driver" : "Restaurant"
                 }
             })
         }
@@ -50,7 +52,7 @@ export default async function AdminPage() {
                     </div>
                 </div>
                 <div className="admin-container">
-                    {session ? (
+                    {session && session.user.role == "Admin" ? (
                         <>
                         <h1>Statistiky</h1>
                         <div id="wrapper">
@@ -82,7 +84,7 @@ export default async function AdminPage() {
                                     <div className="request-details">CV</div>
                                     <div className="request-btns">
                                     <form action={acceptBtn}>
-                                        <input name="id" type="hidden" value={req.id}></input>
+                                        <input name="id" type="hidden" value={req.userId}></input>
                                         <input name="category" type="hidden" value={req.category}></input>
                                         <SubmitButton />
                                     </form>
@@ -99,7 +101,7 @@ export default async function AdminPage() {
                     ) : (
                         <>
                             <h1>Pro přístup na tuto stránku se musíte přihlásit!</h1>
-                            <button onClick={() => signIn("google")}>Přihlašte se přes Google</button>
+                            <SignInBtn></SignInBtn>
                         </>
                     )}
                 </div>
